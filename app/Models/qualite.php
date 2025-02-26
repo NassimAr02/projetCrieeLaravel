@@ -1,0 +1,18 @@
+<?php
+    namespace App\Models;
+    use Illuminate\Database\Eloquent\Factories\HasFactory;
+    use Illuminate\Database\Eloquent\Model;
+
+    class Qualite extends Model 
+    {
+        protected $table = 'QUALITE';
+        protected $primaryKey ='idQualite';
+        public $timestamps=false;
+        protected $fillable =['specificationQualite'];
+        
+        public function lots()
+        {
+            return $this->hasMany(Lot::class, 'idQualite');
+        }
+    }
+?>
