@@ -8,30 +8,28 @@
   <link rel="stylesheet" href="{{ asset('css/style.css') }}">
 </head>
 <body>
-  <!-- Header -->
-  <header>
-    <div class="header-container">
-      <div class="logo">VotreLogo</div>
-      
-      <nav>
-        <ul class="nav-menu">
-          <li><a href="#">Accueil</a></li>
-          <li><a href="#">À propos</a></li>
-          <li><a href="#">Services</a></li>
-          <li><a href="#">Portfolio</a></li>
-          <li><a href="#">Blog</a></li>
-          <li><a href="#">Contact</a></li>
-        </ul>
-      </nav>
-      
-      <div class="header-buttons">
-        <button class="search-button">
-          <i>🔍</i>
-        </button>
-        <button class="menu-toggle">
-          <i>☰</i>
-        </button>
-      </div>
+<!-- Header -->
+<header>
+  <div class="header-container">
+    <div class="logo">
+      <img src="{{ asset('img/logo.png')}}" alt="" style="width: 100px; height: auto;">
     </div>
-  </header>
+   
+    <nav class="nav-mobile">
+      <ul class="nav-menu">
+        <li><a href="/">Accueil</a></li>
+        <li><a href="#">Connexion</a></li>
+        <li><a href="#">Actus</a></li>
+      </ul>
+    </nav>
+
+    {{-- Si on veut rajouter d'autres boutons si jamais --}}
+{{--    
+    <div class="header-buttons">
+      <button class="search-button">
+        <i>🔍</i>
+      </button>
+    </div> --}}
   
+  </div>
+</header>

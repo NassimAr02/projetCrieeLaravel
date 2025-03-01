@@ -158,17 +158,40 @@
     color: #95a5a6;
   }
   
-  /* Responsive design */
-  @media (max-width: 768px) {
-    .nav-menu {
-      display: none;
-    }
-    
-    .menu-toggle {
-      display: block;
-    }
-    
-    .footer-container {
-      grid-template-columns: 1fr;
-    }
+  
+/* Responsive design modifié */
+@media (max-width: 768px) {
+  .header-container {
+    flex-direction: column;
+    padding: 0.8rem;
   }
+  
+  .logo {
+    margin-bottom: 0.8rem;
+  }
+  
+  .nav-menu {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .nav-menu li {
+    margin-left: 0;
+  }
+  
+  .search-button {
+    position: absolute;
+    top: 0.8rem;
+    right: 1rem;
+  }
+  
+  .menu-toggle {
+    display: none;
+  }
+  
+  .footer-container {
+    grid-template-columns: 1fr;
+  }
+}
