@@ -1,3 +1,26 @@
+## Rappel configuration proxy pour le développement dans le réseau du lycée (windows)
+# Pour git
+git config --global http.proxy http://xx.xx.xx.xx:xx/
+git config --global https.proxy http://xx.xx.xx.xx:xx/
+
+# Pour composer
+SET HTTP_PROXY=xx.xx.xx.xx:xx
+SET HTTPS_PROXY=xx.xx.xx.xx:xx
+
+# Pour NPM
+npm config set proxy http://xx.xx.xx.xx:xx/
+npm config set https-proxy http://xx.xx.xx.xx:xx/
+
+## Revenir aux paramètres par défaut
+git config --global --unset https.proxy
+git config --global --unset http.proxy
+
+set HTTP_PROXY=
+set HTTPS_PROXY=
+
+npm config rm proxy
+npm config rm https-proxy
+
 <p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
 <p align="center">
