@@ -6,8 +6,10 @@
 
   <!-- Contenu principal -->
   <main>
-    <h1>Contenu principal de votre site</h1>
-    <p>Ceci est uniquement un exemple pour montrer le header et footer.</p>
+    <div class="centering-wrapper">
+      <h1>Criée des cornouailles</h1> <br>
+      <p>Site de vente de poissons</p>
+    </div>
   </main>
 
 @endsection

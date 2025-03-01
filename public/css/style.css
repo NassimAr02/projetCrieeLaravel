@@ -15,9 +15,16 @@
   main {
     flex: 1;
     padding: 2rem;
-    /* Contenu principal ici */
   }
   
+  .centering-wrapper {
+    height: 200px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+  }
+
   /* Header Style */
   header {
     background: linear-gradient(135deg, #3498db, #2c3e50);
