@@ -1,13 +1,13 @@
-## Rappel configuration proxy pour le développement dans le réseau du lycée (windows)
-# Pour git
+# Rappel configuration proxy pour le développement dans le réseau du lycée (windows)
+## Pour git
 git config --global http.proxy http://xx.xx.xx.xx:xx/
 git config --global https.proxy http://xx.xx.xx.xx:xx/
 
-# Pour composer
+## Pour composer
 SET HTTP_PROXY=xx.xx.xx.xx:xx
 SET HTTPS_PROXY=xx.xx.xx.xx:xx
 
-# Pour NPM
+## Pour NPM
 npm config set proxy http://xx.xx.xx.xx:xx/
 npm config set https-proxy http://xx.xx.xx.xx:xx/
 
