@@ -1,4 +1,4 @@
-/* Styles généraux (à retirer si çá casse les autres pages */
+/* (à retirer si ça casse les autres pages) */
 * {
     margin: 0;
     padding: 0;
@@ -17,14 +17,7 @@
     padding: 2rem;
   }
   
-  .centering-wrapper {
-    height: 200px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-  }
-
+  
   /* Header Style */
   header {
     background: linear-gradient(135deg, #3498db, #2c3e50);
@@ -201,4 +194,13 @@
   .footer-container {
     grid-template-columns: 1fr;
   }
+}
+
+/* Styles généraux */
+.centering-wrapper {
+  height: 200px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
