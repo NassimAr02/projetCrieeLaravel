@@ -8,8 +8,8 @@ SET HTTP_PROXY=xx.xx.xx.xx:xx <br>
 SET HTTPS_PROXY=xx.xx.xx.xx:xx <br>
 
 ## Pour NPM
-npm config set proxy http://xx.xx.xx.xx:xx/ <br>
-npm config set https-proxy http://xx.xx.xx.xx:xx/ <br>
+npm config set proxy http://10.129.254.254/ <br>
+npm config set https-proxy http://10.129.254.254/ <br>
 
 ## Revenir aux paramètres par défaut
 git config --global --unset https.proxy <br>

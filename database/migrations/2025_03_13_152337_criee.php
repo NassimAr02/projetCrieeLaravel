@@ -29,7 +29,8 @@ return new class extends Migration
             $table->unsignedBigInteger('idQualite');
             $table->unsignedBigInteger('idEspece');
             $table->unsignedBigInteger('idAcheteur');
-            $table->unsignedBigInteger('idFacture');
+            $table->unsignedBigInteger('idPanier');
+            $table->unsignedBigInteger('idCriee');
 
             $table->foreign(['idBateau','datePeche'])->references(['idBateau','datePeche'])->on('peche')->onDelete('cascade');
             $table->foreign('idTaille')->references('idTaille')->on('taille')->onDelete('cascade');
@@ -38,7 +39,8 @@ return new class extends Migration
             $table->foreign('idQualite')->references('idQualite')->on('qualite')->onDelete('cascade');
             $table->foreign('idEspece')->references('idEspece')->on('espece')->onDelete('cascade');
             $table->foreign('idAcheteur')->references('idAcheteur')->on('acheteur')->onDelete('cascade');
-            $table->foreign('idFacture')->references('idFacture')->on('facture')->onDelete('cascade');
+            $table->foreign('idPanier')->references('idPanier')->on('panier')->onDelete('cascade');
+            $table->foreign('idCriee')->references('idCriee')->on('criee')->onDelete('cascade');
             $table->primary(['idBateau','datePeche','idLot']);
         });
     }

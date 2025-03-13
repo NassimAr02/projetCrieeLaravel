@@ -11,8 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('facture', function (Blueprint $table) {
-            $table->unsignedBigInteger('idFacture')->primary();
+        Schema::create('criee', function (Blueprint $table) {
+            $table->unsignedBigInteger('idCriee')->primary();
+            $table->date('dateCriee');
+            $table->time('heureDebut');
+            $table->time('heureFin');
         });
     }
 
@@ -21,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('facture');
+        Schema::dropIfExists('presentation');
     }
 };

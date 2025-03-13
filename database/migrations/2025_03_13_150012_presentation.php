@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('presentation', function (Blueprint $table) {
             $table->unsignedBigInteger('idPresentation')->primary();
+            $table->unsignedBigInteger('idBac');
+            $table->unsignedBigInteger('idQualite');
+            $table->foreign('idBac')->references('idBac')->on('bac')->onDelete('cascade');
+            $table->foreign('idQualite')->references('idQualite')->on('qualite')->onDelete('cascade');
             $table->string('libelle');
         });
     }
