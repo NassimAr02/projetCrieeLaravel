@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('panier', function (Blueprint $table) {
             $table->unsignedBigInteger('idAcheteur');
-            $table->unsignedBigInteger('idPanier')->primary();
+            $table->id('idPanier');
             $table->float('total');
             $table->foreign('idAcheteur')->references('idAcheteur')->on('acheteur')->onDelete('cascade');
         });
