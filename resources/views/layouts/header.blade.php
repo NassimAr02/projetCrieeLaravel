@@ -18,7 +18,7 @@
     <nav class="nav-mobile">
       <ul class="nav-menu">
         <li><a href="/">Accueil</a></li>
-        <li><a href="#">Connexion</a></li>
+        <li><a href="/login">Connexion</a></li>
         <li><a href="#">Actus</a></li>
       </ul>
     </nav>
