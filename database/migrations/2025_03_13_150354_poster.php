@@ -11,9 +11,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('taille', function (Blueprint $table) {
-            $table->id('idTaille');
-            $table->string('specification');
+        Schema::create('panier', function (Blueprint $table) {
+            $table->unsignedBigInteger('idAcheteur');
+            $table->id('idPanier');
+            $table->float('total');
+            $table->foreign('idAcheteur')->references('idAcheteur')->on('acheteur')->onDelete('cascade');
         });
     }
 
@@ -22,6 +24,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('taille');
+        Schema::dropIfExists('poster');
     }
 };
