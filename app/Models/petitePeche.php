@@ -5,7 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class petitePeche extends Model
+class PetitePeche extends Model
 {
     /** @use HasFactory<\Database\Factories\PetitePecheFactory> */
     use HasFactory;

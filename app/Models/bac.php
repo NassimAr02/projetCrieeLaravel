@@ -17,4 +17,8 @@
         {
             return $this->hasMany(Lot::class, 'idBac');
         }
+        public function presentations()
+        {
+            return $this->hasMany(Presentation::class,'idBac');
+        }
     }

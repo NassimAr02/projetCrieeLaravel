@@ -43,12 +43,17 @@
         {
             return $this->belongsTo(Acheteur::class,'idAcheteur','idAcheteur');
         }
-        public function facture()
+        public function panier()
         {
-            return $this->belongsTo(Facture::class,'idFacture','idFacture');
+            return $this->belongsTo(Panier::class,'idPanier','idPanier');
         }
         public function posters()
         {
             return $this->hasMany(Poster::class,['idBateau','datePeche','idLot']);
         }
+        public function criee()
+        {
+            return $this->belongsTo(Criee::class,'idCriee','idCriee');
+        }
+
     }
