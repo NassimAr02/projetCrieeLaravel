@@ -5,11 +5,17 @@ use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 
 Route::get('/', function () { return view('welcome'); });
-Route::get('/acheteur', function () { return view('acheteur_accueil'); });
+// Route::get('/acheteur', function () { return view('acheteur_accueil'); });
 
-Route::get('/acheteurSQL', function () { 
-     $user = DB::select('select * from users');
-});
+use App\Http\Controllers\AcheteurQueryController;
+
+Route::get('/acheteur', [AcheteurQueryController::class, 'index'])->name('acheteur_accueil');
+
+
+
+// Route::get('/acheteurSQL', function () { 
+//      $user = DB::select('select * from users');
+// });
 
 
 Route::get('/dashboard', function () {
