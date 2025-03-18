@@ -9,15 +9,10 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class BateauFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'nomBateau' => $this->faker->name(),
         ];
     }
 }
