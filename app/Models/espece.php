@@ -6,6 +6,8 @@
 
     class Espece extends Model
     {
+        use HasFactory;
+
         protected $table = 'espece';
         protected $primaryKey ='idEspece';
         public $timestamps = false;

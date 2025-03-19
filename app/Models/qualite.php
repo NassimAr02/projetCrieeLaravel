@@ -5,6 +5,7 @@
 
     class Qualite extends Model 
     {
+        use HasFactory;
         protected $table = 'QUALITE';
         protected $primaryKey ='idQualite';
         public $timestamps=false;

@@ -22,19 +22,24 @@ class DatabaseSeeder extends Seeder
             'email' => 'test@example.com',
         ]);
 
+        $this->call(QualiteSeeder::class);
+        $this->call(TailleSeeder::class);
+
         $this->call(AcheteurSeeder::class);
         $this->call(BacSeeder::class);
         $this->call(BateauSeeder::class);
         $this->call(CrieeSeeder::class);
         $this->call(EspeceSeeder::class);
-        $this->call(LotSeeder::class);
-        $this->call(PanierSeeder::class);
-        $this->call(PecheCotiereSeeder::class);
+
         $this->call(PecheSeeder::class);
+        $this->call(PecheCotiereSeeder::class);
         $this->call(PetitePecheSeeder::class);
+        
+        $this->call(PanierSeeder::class);
+        $this->call(LotSeeder::class);
+       
         $this->call(PosterSeeder::class);
         $this->call(PresentationSeeder::class);
-        $this->call(QualiteSeeder::class);
-        $this->call(TailleSeeder::class);
+        
     }
 }
