@@ -14,27 +14,28 @@
 
         protected $fillable = ['idBateau', 'datePeche']; // Colonnes modifiables en masse
         protected $primaryKey = null; 
-    /**
-     * Relation avec le modèle Bateau.
-     * Un enregistrement dans `peche` appartient à un bateau.
-     */
-    public function bateau()
-    {
-        return $this->belongsTo(Bateau::class, 'idBateau', 'idBateau');
-    }
-    public function lots()
-    {
-        return $this->hasMany(Lot::class, 'idPeche');
-    }
-    public function petitePeche()
-    {
-        return $this->hasOne(PetitePeche::class);
-    }
+        
+        /**
+         * Relation avec le modèle Bateau.
+         * Un enregistrement dans `peche` appartient à un bateau.
+         */
+        public function bateau()
+        {
+            return $this->belongsTo(Bateau::class, 'idBateau', 'idBateau');
+        }
+        public function lots()
+        {
+            return $this->hasMany(Lot::class, 'idPeche');
+        }
+        public function petitePeche()
+        {
+            return $this->hasOne(PetitePeche::class);
+        }
 
-    public function pecheCotiere()
-    {
-        return $this->hasOne(PecheCotiere::class);
-    }
+        public function pecheCotiere()
+        {
+            return $this->hasOne(PecheCotiere::class);
+        }
 
     }
 ?>

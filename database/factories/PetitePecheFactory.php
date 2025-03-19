@@ -16,7 +16,7 @@ class PetitePecheFactory extends Factory
         return [
             //clés étrangères
             'idBateau' => Peche::inRandomOrder()->first()?->id ?? Peche::factory()->create()->id,
-            'datePeche' => Peche::inRandomOrder()->first()?->id ?? Peche::factory()->create()->date(),
+            'datePeche' => Peche::inRandomOrder()->first()?->id ?? Peche::factory()->create()->date('Y_m_d'),
         ];
     }
 }

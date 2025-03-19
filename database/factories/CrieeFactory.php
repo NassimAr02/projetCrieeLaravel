@@ -12,7 +12,7 @@ class CrieeFactory extends Factory
     public function definition(): array
     {
         return [
-            'dateCriee' => $this->faker->date(),
+            'dateCriee' => $this->faker->date('Y_m_d'),
             'heureDebut' => $this->faker->time(),
             'heureFin' => $this->faker->time(),
         ];

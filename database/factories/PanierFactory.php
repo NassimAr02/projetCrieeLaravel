@@ -13,10 +13,10 @@ class PanierFactory extends Factory
     public function definition(): array
     {
         return [
-            'nomBateau' => $this->faker->randomNumber(),
+            'total' => $this->faker->randomFloat(),
 
             //clé étrangères 
-            'idAcheteur' => Acheteur::inRandomOrder()->first()?->id ?? Acheteur::factory()->create()->id,
+            'idAcheteur' => Acheteur::inRandomOrder()->first()?->idAcheteur ?? Acheteur::factory()->create()->id,
         ];
     }
 }

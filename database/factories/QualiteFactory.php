@@ -13,7 +13,7 @@ class QualiteFactory extends Factory
     {
         return [
             'specificationQualite' => $this->faker->randomElement(['E', 'A', 'B']),
-            'libeleQualite'	=> $this->faker->randomElement('Extra','Glacé','Déclassé'),
+            'libeleQualite'	=> $this->faker->randomElement(['Extra','Glacé','Déclassé']), //à ajouter plus tard
         ];
     }
 }

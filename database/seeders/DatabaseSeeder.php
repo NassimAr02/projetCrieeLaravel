@@ -32,8 +32,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EspeceSeeder::class);
 
         $this->call(PecheSeeder::class);
-        $this->call(PecheCotiereSeeder::class);
-        $this->call(PetitePecheSeeder::class);
+        // $this->call(PecheCotiereSeeder::class); //Décommenter si réglé
+        // $this->call(PetitePecheSeeder::class); //Pareil ici
         
         $this->call(PanierSeeder::class);
         $this->call(LotSeeder::class);

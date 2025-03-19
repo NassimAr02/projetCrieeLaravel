@@ -23,7 +23,7 @@ class PosterFactory extends Factory
             
             //Clés étrangères
             'idBateau' => Lot::inRandomOrder()->first()?->id ?? Lot::factory()->create()->id,
-            'datePeche' => Lot::inRandomOrder()->first()?->id ?? Lot::factory()->create()->date(),
+            'datePeche' => Lot::inRandomOrder()->first()?->id ?? Lot::factory()->create()->date('Y_m_d'),
             'idLot' => Lot::inRandomOrder()->first()?->id ?? Lot::factory()->create()->id,
         ];
     }

@@ -15,7 +15,7 @@ class PecheFactory extends Factory
     public function definition(): array
     {
         return [
-            'datePeche' => $this->faker->date(),
+            'datePeche' => $this->faker->date('Y_m_d'),
             'typePeche' => $this->faker->randomElement(['Petite Pêche', 'Pêche Côtière']),
 
             //Clé étrangère

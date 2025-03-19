@@ -17,12 +17,12 @@ class LotFactory extends Factory
     public function definition(): array
     {
         return [
-            'datePeche' => $this->faker->date(), // Date aléatoire
+            'datePeche' => $this->faker->date('Y_m_d'), // Date aléatoire
             'poidsBrutLot' => $this->faker->randomFloat(2, 1, 100), // Poids en kg (1 à 100 kg)
             'prixPlancher' => $this->faker->randomFloat(2, 10, 500), // Prix plancher en €
             'prixDepart' => $this->faker->randomFloat(2, 10, 500), // Prix de départ en €
             'prixEnchereMax' => $this->faker->optional()->randomFloat(2, 50, 1000), // Prix max d'enchère (optionnel)
-            'dateEnchere' => $this->faker->date(),
+            'dateEnchere' => $this->faker->date('Y_m_d'),
             'heureDebutEnchere' => $this->faker->time(),
             'codeEtat' => $this->faker->randomElement(['NEUF', 'USÉ', 'BON']), // État du lot
             
