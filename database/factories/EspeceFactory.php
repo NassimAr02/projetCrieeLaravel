@@ -14,7 +14,7 @@ class EspeceFactory extends Factory
         return [
             'nomEspece' => $this->faker->userName(),
             'nomScientifiqueEspece' => $this->faker->name(),
-            'nomCommunEspece' => $this->faker->streetName(),
+            'nomCommunEspece' => $this->faker->randomElement(['poisson', 'crustacé']),
         ];
     }
 }

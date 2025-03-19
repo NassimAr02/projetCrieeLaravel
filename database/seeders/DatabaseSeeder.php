@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Models\Bac;
+use App\Models\Criee;
 use App\Models\User;
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
@@ -21,6 +23,18 @@ class DatabaseSeeder extends Seeder
         ]);
 
         $this->call(AcheteurSeeder::class);
+        $this->call(BacSeeder::class);
         $this->call(BateauSeeder::class);
+        $this->call(CrieeSeeder::class);
+        $this->call(EspeceSeeder::class);
+        $this->call(LotSeeder::class);
+        $this->call(PanierSeeder::class);
+        $this->call(PecheCotiereSeeder::class);
+        $this->call(PecheSeeder::class);
+        $this->call(PetitePecheSeeder::class);
+        $this->call(PosterSeeder::class);
+        $this->call(PresentationSeeder::class);
+        $this->call(QualiteSeeder::class);
+        $this->call(TailleSeeder::class);
     }
 }

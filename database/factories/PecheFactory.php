@@ -7,17 +7,19 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Peche>
  */
+
+use app\Models\Bateau;
+
 class PecheFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'datePeche' => $this->faker->date(),
+            'typePeche' => $this->faker->randomElement(['Petite Pêche', 'Pêche Côtière']),
+
+            //Clé étrangère
+            'idBateau' => Bateau::inRandomOrder()->first()?->id ?? Bateau::factory()->create()->id,
         ];
     }
 }

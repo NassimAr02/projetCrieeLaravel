@@ -7,17 +7,24 @@ use Illuminate\Database\Eloquent\Factories\Factory;
 /**
  * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Poster>
  */
+
+use app\Models\Lot;
+use app\Models\Acheteur;
+
+
 class PosterFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
+
     public function definition(): array
     {
         return [
-            //
+            'prixEnchere' => $this->faker->randomFloat(),
+            'heureEnchere' => $this->faker->randomFloat(),
+            
+            //Clés étrangères
+            'idBateau' => Lot::inRandomOrder()->first()?->id ?? Lot::factory()->create()->id,
+            'datePeche' => Lot::inRandomOrder()->first()?->id ?? Lot::factory()->create()->date(),
+            'idLot' => Lot::inRandomOrder()->first()?->id ?? Lot::factory()->create()->id,
         ];
     }
 }

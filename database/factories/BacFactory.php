@@ -18,7 +18,8 @@ class BacFactory extends Factory
     public function definition(): array
     {
         return [
-
+            'tare' => $this->faker->randomFloat(),
+            'typeBac' => $this->faker->name(),
         ];
     }
 }

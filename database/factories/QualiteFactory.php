@@ -9,15 +9,11 @@ use Illuminate\Database\Eloquent\Factories\Factory;
  */
 class QualiteFactory extends Factory
 {
-    /**
-     * Define the model's default state.
-     *
-     * @return array<string, mixed>
-     */
     public function definition(): array
     {
         return [
-            //
+            'specificationQualite' => $this->faker->randomElement(['E', 'A', 'B']),
+            'libeleQualite'	=> $this->faker->randomElement('Extra','Glacé','Déclassé'),
         ];
     }
 }
