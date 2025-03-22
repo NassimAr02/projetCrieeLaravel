@@ -20,9 +20,9 @@ class PresentationFactory extends Factory
             'libelle' => $this->faker->randomElement(['Entier', 'Vidé']),
 
             //Clés étrangères
-            'idAcheteur' => Acheteur::inRandomOrder()->first()?->id ?? Acheteur::factory()->create()->id,
-            'idQualite' => Qualite::inRandomOrder()->first()?->id ?? Qualite::factory()->create()->id,
-            'idBac' => Bac::inRandomOrder()->first()?->id ?? Bac::factory()->create()->id,
+            'idAcheteur' => Acheteur::inRandomOrder()->first()?->idAcheteur ?? Acheteur::factory()->create()->id,
+            'idQualite' => Qualite::inRandomOrder()->first()?->idQualite ?? Qualite::factory()->create()->id,
+            'idBac' => Bac::inRandomOrder()->first()?->idBac ?? Bac::factory()->create()->id,
 
         ];
     }

@@ -8,7 +8,9 @@
     class Lot extends Model
     {
         use HasFactory;
-        protected $table ='peche';
+        protected $table ='lot';
+        // protected $table ='peche';
+
         public $incrementing = false;
 
         public $timestamps=false;

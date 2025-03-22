@@ -19,7 +19,7 @@ class PecheFactory extends Factory
             'typePeche' => $this->faker->randomElement(['Petite Pêche', 'Pêche Côtière']),
 
             //Clé étrangère
-            'idBateau' => Bateau::inRandomOrder()->first()?->id ?? Bateau::factory()->create()->id,
+            'idBateau' => Bateau::inRandomOrder()->first()?->idBateau ?? Bateau::factory()->create()->id,
         ];
     }
 }

@@ -2,7 +2,7 @@
 
 namespace Database\Seeders;
 
-use app\Models\Lot;
+use App\Models\Lot;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
