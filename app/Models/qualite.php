@@ -6,7 +6,7 @@
     class Qualite extends Model 
     {
         use HasFactory;
-        protected $table = 'QUALITE';
+        protected $table = 'qualite';
         protected $primaryKey ='idQualite';
         public $timestamps=false;
         protected $fillable =['specificationQualite,libeleQualite'];
