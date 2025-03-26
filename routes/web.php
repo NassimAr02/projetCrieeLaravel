@@ -11,8 +11,12 @@ use App\Http\Controllers\AcheteurQueryController;
 
 Route::get('/acheteur', [AcheteurQueryController::class, 'index'])->name('acheteur_accueil');
 
-
-
+Route::get('/mentionLegale', function () {
+    return view('mentionLegale');
+})->name('mentionLegale');
+Route::get('/cgv', function () {
+    return view('cgv');
+})->name('cgv');
 // Route::get('/acheteurSQL', function () { 
 //      $user = DB::select('select * from users');
 // });

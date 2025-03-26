@@ -13,15 +13,17 @@
         <ul>
           <li><a href="#">Accueil</a></li>
           <li><a href="#">Actus</a></li>
+          <li><a href="{{ route('mentionLegale') }}">Mention légales</a></li>
+          <li><a href="{{ route('cgv') }}">Condition générales de ventes</a></li>
         </ul>
       </div>
       
       <div class="footer-section">
         <h3>Contactez-nous</h3>
         <ul>
-          <li>Email: contact@cornouaille.fr</li>
-          <li>Téléphone: +33 1 23 45 67 89</li>
-          <li>Adresse: Zône Pêche Atlantique du Nord, La Pointe du Raz, 29770 Plogoff</li>
+          <li>Email: contact@poulgoazec.fr</li>
+          <li>Téléphone: 02 98 45 67 89</li>
+          <li>Quartier maritime d'Audierne, 29780 Plouhinec</li>
         </ul>
       </div>
       
