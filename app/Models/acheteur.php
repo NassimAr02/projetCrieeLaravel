@@ -14,7 +14,7 @@
         protected $table='acheteur';
         protected $primaryKey = 'idAcheteur';
         public $timestamps = false;
-        protected $fillable = ['loginA','emailA','telA','pwd','raisonSocialeEntreprise','locRue','rue','ville','cp','numHabilitation'];
+        protected $fillable = ['loginA','email','telA','pwd','raisonSocialeEntreprise','locRue','rue','ville','cp','numHabilitation'];
         // Relation One-to-Many (Un Acheteur a plusieurs Paniers)
     
         /**
@@ -29,7 +29,7 @@
         }
         public function getEmailForPasswordReset()
         {
-            return $this->emailA;
+            return $this->email;
         }
         public function getAuthPassword()
         {

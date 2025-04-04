@@ -39,7 +39,7 @@ class RegisteredUserController extends Controller
 
         $request->validate([
             'loginA' => ['required', 'string', 'max:255', 'unique:acheteur,loginA'],
-            'emailA' => ['required', 'string', 'lowercase', 'email', 'max:255'],
+            'email' => ['required', 'string', 'lowercase', 'email', 'max:255'],
             'telA' => ['required', 'string', 'max:255'],
             'pwd' => ['required', 'confirmed', Rules\Password::defaults()],
             'raisonSocialeEntreprise' => ['required', 'string', 'max:255'],
@@ -52,7 +52,7 @@ class RegisteredUserController extends Controller
 
         $user = Acheteur::create([
             'loginA' => $request->loginA,
-            'emailA' => $request->emailA,
+            'email' => $request->email,
             'telA' =>$request->telA,
             'pwd' => Hash::make($request->pwd),
             'raisonSocialeEntreprise' =>$request->raisonSocialeEntreprise,

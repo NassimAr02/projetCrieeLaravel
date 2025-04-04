@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\DB;
 Route::get('/', function () { return view('welcome'); });
 // Route::get('/acheteur', function () { return view('acheteur_accueil'); });
 
+Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres');
+
 use App\Http\Controllers\AcheteurQueryController;
 
 Route::get('/acheteur', [AcheteurQueryController::class, 'index'])->name('acheteur_accueil');
@@ -14,6 +16,7 @@ Route::get('/acheteur', [AcheteurQueryController::class, 'index'])->name('achete
 Route::get('/mentionLegale', function () {
     return view('mentionLegale');
 })->name('mentionLegale');
+
 Route::get('/cgv', function () {
     return view('cgv');
 })->name('cgv');

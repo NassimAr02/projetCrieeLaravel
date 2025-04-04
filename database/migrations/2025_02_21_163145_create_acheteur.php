@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('acheteur', function (Blueprint $table) {
             $table->id('idAcheteur');
             $table->string('loginA');
-            $table->string('emailA');
+            $table->string('email');
             $table->string('telA');
             $table->string('pwd');
             $table->string('raisonSocialeEntreprise');

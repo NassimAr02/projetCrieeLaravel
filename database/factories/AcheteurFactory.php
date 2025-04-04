@@ -13,7 +13,7 @@ class AcheteurFactory extends Factory
     {
         return [
             'loginA' => $this->faker->unique()->userName(),
-            'emailA' => $this->faker->email(),
+            'email' => $this->faker->email(),
             'telA'=>$this->faker->phoneNumber(),
             'pwd' => bcrypt('password'), // Mot de passe par défaut (modifiable)
             'raisonSocialeEntreprise' => $this->faker->company(),
