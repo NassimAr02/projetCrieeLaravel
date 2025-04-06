@@ -1,9 +1,17 @@
 <?php
 
 use App\Http\Controllers\ProfileController;
-use App\Http\Controllers\AcheteurQueryController;
-use App\Http\Controllers\AdminAuthController;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\DB;
+use App\Http\Controllers\AcheteurQueryController;
+use App\Http\Controllers\AdminCrieeController;
+use App\Http\Controllers\CommissaireCrieeController;
+Route::get('/', function () { return view('welcome'); });
+// Route::get('/acheteur', function () { return view('acheteur_accueil'); });
+
+Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres');
+
+
 
 // Routes publiques
 Route::get('/', function () {
@@ -17,15 +25,36 @@ Route::get('/mentionLegale', function () {
 Route::get('/cgv', function () {
     return view('cgv');
 })->name('cgv');
+// Route::get('/acheteurSQL', function () { 
+//      $user = DB::select('select * from users');
+// });
+// Routes Admin
 
-// Authentification Acheteur (Breeze standard)
-require __DIR__.'/auth.php';
-
-// Authentification Admin (MySQL)
-Route::prefix('admin')->group(function () {
-    Route::get('/login', [AdminAuthController::class, 'showLoginForm'])->name('admin.login');
-    Route::post('/login', [AdminAuthController::class, 'login']);
+Route::prefix('admin')->group(function() {
+    Route::get('/login', [AdminCrieeController::class, 'showLoginForm'])->name('admin.login');
+    Route::post('/login', [AdminCrieeController::class, 'login']);
+    Route::post('/logout', [AdminCrieeController::class, 'logout'])->name('admin.logout');
+    
+    Route::middleware('auth:admin')->group(function() {
+        Route::get('/dashboard', function() {
+            return view('admin.dashboard');
+        })->name('admin.dashboard');
+    });
 });
+
+// Routes Commissaire
+Route::prefix('commissaire')->group(function() {
+    Route::get('/login', [CommissaireCrieeController::class, 'showLoginForm'])->name('commissaire.login');
+    Route::post('/login', [CommissaireCrieeController::class, 'login']);
+    Route::post('/logout', [CommissaireCrieeController::class, 'logout'])->name('commissaire.logout');
+    
+    Route::middleware('auth:commissaire')->group(function() {
+        Route::get('/dashboard', function() {
+            return view('commissaire.dashboard');
+        })->name('commissaire.dashboard');
+    });
+});
+
 
 // Routes protégées Acheteur
 Route::middleware(['auth:web'])->group(function () {
