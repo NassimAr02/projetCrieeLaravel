@@ -37,8 +37,18 @@ return [
 
     'guards' => [
         'web' => [
+        'driver' => 'session',
+        'provider' => 'acheteurs', // Par défaut pour les acheteurs
+        ],
+
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'admins',
+        ],
+
+        'commissaire' => [
+            'driver' => 'session',
+            'provider' => 'commissaires',
         ],
     ],
 
@@ -64,7 +74,22 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\Acheteur::class),
         ],
+        'acheteurs' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\Acheteur::class,
+        ],
 
+        'admins' => [
+            'driver' => 'database', // Utilise directement la connexion MySQL
+            'connection' => 'mysql_admin',
+            'table' => 'mysql.user', // Table des users MySQL
+        ],
+
+        'commissaires' => [
+            'driver' => 'database',
+            'connection' => 'mysql_commissaire',
+            'table' => 'mysql.user',
+        ],
         // 'users' => [
         //     'driver' => 'database',
         //     'table' => 'users',
