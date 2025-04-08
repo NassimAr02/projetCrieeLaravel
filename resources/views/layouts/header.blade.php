@@ -19,7 +19,7 @@
       <ul class="nav-menu">
         <li><a href="/">Accueil</a></li>
         <li><a href="{{ route('login') }}">Connexion</a></li>
-        <li><a href="#">Actus</a></li>
+        <li><a href="{{ route('staff.login')}}">Connexion employé</a></li>
       </ul>
     </nav>
 
