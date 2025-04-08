@@ -8,6 +8,7 @@ use Illuminate\Support\Facades\DB;
 
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
+Route::get('/accueil', function() { return view('welcome'); })->name('accueil');
 Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres');
 Route::get('/acheteur', [AcheteurQueryController::class, 'index'])->name('acheteur_accueil');
 Route::get('/mentionLegale', function () { return view('mentionLegale'); })->name('mentionLegale');

@@ -12,7 +12,7 @@
 <header>
   <div class="header-container">
     <div class="logo">
-      <img src="{{ asset('img/logo.png')}}" alt="" style="width: 100px; height: auto;">
+      <a href="{{ route('accueil') }}"><img src="{{ asset('img/logo.png')}}" alt="" style="width: 100px; height: auto;"></a>
     </div>
    
     <nav class="nav-mobile">
