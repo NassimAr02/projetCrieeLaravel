@@ -37,8 +37,22 @@ return [
 
     'guards' => [
         'web' => [
+        'driver' => 'session',
+        'provider' => 'acheteurs', // Par défaut pour les acheteurs
+        ],
+
+        'admin' => [
             'driver' => 'session',
-            'provider' => 'users',
+            'provider' => 'admins',
+        ],
+
+        'commissaire' => [
+            'driver' => 'session',
+            'provider' => 'commissaires',
+        ],
+        'criee' => [
+        'driver' => 'session',
+        'provider' => 'criee_users',
         ],
         'staff' => [
             'driver' => 'session',
@@ -68,9 +82,9 @@ return [
             'driver' => 'eloquent',
             'model' => env('AUTH_MODEL', App\Models\Acheteur::class),
         ],
-        'staff' => [
-            'driver' => 'eloquent',
-            
+        'criee_users' => [
+        'driver' => 'eloquent',
+        'model' => App\Models\CrieeUser::class,
         ],
         // 'users' => [
         //     'driver' => 'database',
