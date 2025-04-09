@@ -40,24 +40,11 @@ return [
         'driver' => 'session',
         'provider' => 'acheteurs', // Par défaut pour les acheteurs
         ],
-
-        'admin' => [
-            'driver' => 'session',
-            'provider' => 'admins',
-        ],
-
-        'commissaire' => [
-            'driver' => 'session',
-            'provider' => 'commissaires',
-        ],
         'criee' => [
         'driver' => 'session',
         'provider' => 'criee_users',
         ],
-        'staff' => [
-            'driver' => 'session',
-            'provider' => 'staff',
-        ],
+       
     ],
 
     /*
@@ -78,13 +65,13 @@ return [
     */
 
     'providers' => [
-        'users' => [
+        'acheteurs' => [
             'driver' => 'eloquent',
-            'model' => env('AUTH_MODEL', App\Models\Acheteur::class),
+            'model' => App\Models\Acheteur::class,
         ],
         'criee_users' => [
-        'driver' => 'eloquent',
-        'model' => App\Models\CrieeUser::class,
+            'driver' => 'eloquent',
+            'model' => App\Models\CrieeUser::class,
         ],
         // 'users' => [
         //     'driver' => 'database',
