@@ -5,7 +5,8 @@ use App\Http\Controllers\AcheteurQueryController;
 use App\Http\Controllers\loginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
-
+use App\Http\Controllers\AccueilAdminController;
+use App\Http\Controllers\createCrieeController;                     
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
 Route::get('/accueil', function() { return view('welcome'); })->name('accueil');
@@ -34,7 +35,8 @@ Route::post('/staff/logout', [loginController::class, 'logout'])
     ->name('staff.logout'); 
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
-    Route::get('/dashboard', function () { return view('admin.dashboard'); })->name('admin.dashboard');
+    Route::get('/dashboard', [AccueilAdminController::class, 'index'])->name('admin.dashboard');
+    Route::get('/createCriee',[CreateCrieeController::class, 'index'])->name('admin.createCriee');
     // Ajoutez d'autres routes admin ici
 });
 
