@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\AcheteurQueryController;
+use App\Http\Controllers\CommissaireController;
 use App\Http\Controllers\loginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
@@ -43,6 +44,8 @@ Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
 // Routes commissaire
 Route::middleware(['staff.auth:commissaire'])->prefix('commissaire')->group(function () {
     Route::get('/dashboard', function () { return view('commissaire.dashboard'); })->name('commissaire.dashboard');
+    Route::get('/vente', [CommissaireController::class, 'index'])
+         ->name('commissaire.vente.index');
     // Ajoutez d'autres routes commissaire ici
 });
 
