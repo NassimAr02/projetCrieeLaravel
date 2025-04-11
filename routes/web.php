@@ -38,6 +38,7 @@ Route::post('/staff/logout', [loginController::class, 'logout'])
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AccueilAdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/createCriee',[CreateCrieeController::class, 'index'])->name('admin.createCriee');
+    Route::post('/createCriee',[CreateCrieeController::class, 'store'])->name('admin.createCriee.store');
     // Ajoutez d'autres routes admin ici
 });
 

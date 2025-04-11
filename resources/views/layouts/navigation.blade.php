@@ -51,9 +51,7 @@
 
                 @elseif(session('user_type'))
                     <!-- Staff Connecté (Admin/Commissaire) -->
-                    <span class="text-sm text-gray-500 mr-4">
-                        Connecté en tant que: {{ ucfirst(session('user_type')) }}
-                    </span>
+                    
                     <form method="POST" action="{{ route('staff.logout') }}">
                         @csrf
                         <button type="submit" class="text-sm text-gray-500 hover:text-gray-700">
