@@ -7,8 +7,10 @@ use App\Http\Controllers\loginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AccueilAdminController;
+use App\Http\Controllers\ajoutBateauController;
 use App\Http\Controllers\ajoutLotController;
-use App\Http\Controllers\createCrieeController;                     
+use App\Http\Controllers\createCrieeController;     
+use App\Http\Controllers\ajoutPechesController;                
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
 Route::get('/accueil', function() { return view('welcome'); })->name('accueil');
@@ -40,8 +42,17 @@ Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AccueilAdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/createCriee',[CreateCrieeController::class, 'index'])->name('admin.createCriee');
     Route::post('/createCriee',[CreateCrieeController::class, 'store'])->name('admin.createCriee.store');
-    Route::get('/ajoutLot', [ajoutLotController::class, 'create'])->name('admin.ajoutLot.create');
-    // Ajoutez d'autres routes admin ici
+    // GET pour afficher le formulaire
+    Route::get('/ajoutLot/{criee}', [ajoutLotController::class, 'create'])
+         ->name('admin.ajoutLot.create');
+         
+    // POST pour traiter le formulaire
+    Route::post('/ajoutLot/{criee}', [ajoutLotController::class, 'store'])
+         ->name('admin.ajoutLot.store');
+    Route::get('/ajoutBateau',[ajoutBateauController::class, 'create'])->name('admin.bateau');
+    Route::post('/ajoutBateau',[ajoutBateauController::class, 'store'])->name('admin.bateau.store');
+    Route::get('/ajoutPeches',[ajoutPechesController::class, 'create'])->name('admin.ajoutPeches');
+    Route::post('/ajoutPeches',[ajoutPechesController::class, 'create'])->name('admin.ajoutPeches.store');
 });
 
 // Routes commissaire
