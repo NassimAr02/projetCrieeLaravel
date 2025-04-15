@@ -7,6 +7,7 @@ use App\Http\Controllers\loginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
 use App\Http\Controllers\AccueilAdminController;
+use App\Http\Controllers\ajoutLotController;
 use App\Http\Controllers\createCrieeController;                     
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
@@ -39,6 +40,7 @@ Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AccueilAdminController::class, 'index'])->name('admin.dashboard');
     Route::get('/createCriee',[CreateCrieeController::class, 'index'])->name('admin.createCriee');
     Route::post('/createCriee',[CreateCrieeController::class, 'store'])->name('admin.createCriee.store');
+    Route::get('/ajoutLot', [ajoutLotController::class, 'create'])->name('admin.ajoutLot.create');
     // Ajoutez d'autres routes admin ici
 });
 

@@ -11,14 +11,18 @@ class accueilAdminController extends Controller
     
    // Charge les criees avenir
     public function index() {
-        return view('admin.dashboard', [
-            'prochaineCriee' => Criee::where('dateCriee', '>', now())
-                                ->orderBy('dateCriee')
-                                ->first(),
-            'criees' => Criee::where('dateCriee', '>', now())
+        $prochaineCriee = Criee::where('dateCriee', '>=', Carbon::now())
                         ->orderBy('dateCriee')
-                        ->get()
-        ]);
+                        ->first();
+        // Conversion manuelle si nécessaire
+        if ($prochaineCriee) {
+            $prochaineCriee->dateCriee = \Carbon\Carbon::parse($prochaineCriee->dateCriee);
+        }
+        $criees = Criee::where('dateCriee', '>=', Carbon::now())
+                    ->orderBy('dateCriee')
+                    ->get();
+
+        return view('admin.dashboard', compact('prochaineCriee', 'criees'));
     }
         
 }

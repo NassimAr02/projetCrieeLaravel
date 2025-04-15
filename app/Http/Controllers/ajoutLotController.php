@@ -7,5 +7,8 @@ use Illuminate\Http\Request;
 
 class ajoutLotController extends Controller
 {
-    //
+    public function create()
+    {
+        
+    }
 }
