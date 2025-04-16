@@ -34,7 +34,7 @@
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">
                         <!-- Groupe de champs avec style cohérent -->
-                        <h4>Formulaire de Pêche</h4>
+                        <h4>Formulaire de lot</h4>
                         <div class="space-y-2">
                             <label for="bateau" class="block text-sm font-medium text-gray-700 flex items-center">
                                 <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -42,10 +42,14 @@
                                 </svg>
                                 Bateau de la pêche
                             </label>
-                            <select name="bateau" id="bateau">
-                            @foreach($bateaux as $bateau)
-                                <option value="{{ $bateau->nomBateau }}">{{ $bateau->nomBateau }}</option>
+                            <select name="peches" id="peches" readonly>
+                            @foreach($peches as $peche)
+                            <option value="{{ $peche->datePeche }}" data-bateau-id="{{ $peche->idBateau }}">
+                                Bateau: {{ $peche->bateau->nomBateau }} - 
+                                Pêche du {{ $peche->datePeche }} ({{ $peche->typePeche }})
+                            </option>
                             @endforeach
+                            <input type="hidden" name="idBateau" id="idBateau">
                         </select>
                         </div>
 
@@ -60,12 +64,7 @@
                                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 ease-in-out py-2 px-3 border">
                         </div>
 
-                        <h4>Formulaire du lot </h4>
-                        <div class="space-y-2">
-                            <label for="">
-                                
-                            </label>
-                        </div>
+                        
                     </div>
 
                     <!-- Boutons d'action avec le style bleu original -->
@@ -111,6 +110,21 @@
             
             heureDebut.addEventListener('change', calculerHeureFin);
             nbLot.addEventListener('input', calculerHeureFin);
+        });
+        document.addEventListener('DOMContentLoaded', function() {
+            const pecheSelect = document.getElementById('peches');
+            const bateauIdInput = document.getElementById('idBateau');
+            
+            // Met à jour lors de la sélection initiale
+            updateBateauId();
+            
+            // Met à jour quand la sélection change
+            pecheSelect.addEventListener('change', updateBateauId);
+            
+            function updateBateauId() {
+                const selectedOption = pecheSelect.options[pecheSelect.selectedIndex];
+                bateauIdInput.value = selectedOption.getAttribute('data-bateau-id');
+            }
         });
     </script>
 </x-app-layout>

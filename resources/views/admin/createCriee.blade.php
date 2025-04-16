@@ -14,7 +14,8 @@
     </x-slot>
 
     <div class="py-6">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
+
             <!-- Carte avec ombre plus douce -->
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
                 <!-- En-tête avec dégradé de couleur -->
@@ -29,7 +30,7 @@
                 </div>
 
                 <!-- Formulaire avec espacement amélioré -->
-                <form action="{{ route('admin.ajoutLot.store', ['criee' => $criee->idCriee]) }}" method="POST" class="p-6">
+                <form action="{{ route('admin.createCriee.store') }}" method="POST" class="p-6">
                     @csrf
 
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-8">

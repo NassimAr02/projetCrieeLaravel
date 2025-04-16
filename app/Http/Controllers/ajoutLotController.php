@@ -10,6 +10,7 @@ use App\Models\Qualite;
 use App\Models\Espece;
 use App\Models\Criee;
 use App\Models\Bateau;
+use App\Models\Peche;
 class ajoutLotController extends Controller
 {
     public function create($criee)
@@ -22,8 +23,8 @@ class ajoutLotController extends Controller
         $qualites = Qualite::all();
         $especes =Espece::all(); 
         $bateaux = Bateau::all();
-        
-        return view('admin.ajoutLot', compact('bacs','tailles','qualites','especes','criee','bateaux'));
+        $peches = Peche::with('bateau')->get(); 
+        return view('admin.ajoutLot', compact('bacs','tailles','qualites','especes','criee','bateaux','peches'));
     }
     public function store(Request $req, $criee)
     {

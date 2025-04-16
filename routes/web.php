@@ -52,7 +52,7 @@ Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::get('/ajoutBateau',[ajoutBateauController::class, 'create'])->name('admin.bateau');
     Route::post('/ajoutBateau',[ajoutBateauController::class, 'store'])->name('admin.bateau.store');
     Route::get('/ajoutPeches',[ajoutPechesController::class, 'create'])->name('admin.ajoutPeches');
-    Route::post('/ajoutPeches',[ajoutPechesController::class, 'create'])->name('admin.ajoutPeches.store');
+    Route::post('/ajoutPeches',[ajoutPechesController::class, 'store'])->name('admin.ajoutPeches.store');
 });
 
 // Routes commissaire

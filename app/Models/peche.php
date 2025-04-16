@@ -12,7 +12,7 @@
         
         public $timestamps=false;
 
-        protected $fillable = ['idBateau', 'datePeche']; // Colonnes modifiables en masse
+        protected $fillable = ['idBateau', 'datePeche','typePeche']; // Colonnes modifiables en masse
         protected $primaryKey = null; 
         
         /**
