@@ -81,20 +81,35 @@
                                 Qualité : {{$qualite->specificationQualite}} ({{$qualite->libeleQualite}})
                             </option>
                             @endforeach
-                            <input type="hidden" name="idBateau" id="idBateau">
                         </select>
-                        <input list="brow">
-                        <datalist id="brow">
-                            <option value="Internet Explorer">
-                            <option value="Firefox">
-                            <option value="Chrome">
-                            <option value="Opera">
-                            <option value="Safari">
-                            
+                        
+                    </div>
+                    <div class="space-y-2">
+                        <label for="nomCommunEspece" class="block text-sm font-medium text-gray-700 flex items-center">
+                            <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                            </svg>
+                            Nom Espece 
+                        </label>
+                        <input list="nomCommunEspece">
+                        <datalist id="nomCommunEspece">
+                            @foreach ($especes as $espece)
+                            <option value="{{ $espece->nomCommunEspece}}">
+                            @endforeach
                         </datalist> 
                         <!-- Liste permettant la recherche d'élément -->
+                        <div class="flex space-x-2">
+                            <a href="#" 
+                                class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                                style="background-color: #2563eb;"
+                                onmouseover="this.style.backgroundColor='#1d4ed8'" 
+                                onmouseout="this.style.backgroundColor='#2563eb'">
+                                Espece non trouvé ?
+                            </a>
+                        
+                        </div>
                     </div>
-
+                    
                     <!-- Boutons d'action avec le style bleu original -->
                     <div class="flex justify-end space-x-3 pt-6 border-t border-gray-200">
                         <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center px-4 py-2 border border-gray-300 rounded-md shadow-sm text-sm font-medium text-gray-700 bg-white hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out">
