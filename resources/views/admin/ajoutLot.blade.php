@@ -1,4 +1,4 @@
-<x-app-layout>
+<x-staff-layout>
     <x-slot name="header">
         <div class="flex justify-between items-center">
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
@@ -14,7 +14,7 @@
     </x-slot>
 
     <div class="py-6">
-        <div class="max-w-4xl mx-auto sm:px-6 lg:px-8">
+        <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Carte avec ombre plus douce -->
             <div class="bg-white overflow-hidden shadow-md sm:rounded-lg">
                 <!-- En-tête avec dégradé de couleur -->
@@ -54,17 +54,45 @@
                         </div>
 
                         <div class="space-y-2">
-                            <label for="datePeche" class="block text-sm font-medium text-gray-700 flex items-center">
-                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
-                                </svg>
-                                Date de la pêche
+                            <label for="poidBrut" class="block text-sm font-medium text-gray-700 mb-1">
+                                Poids Brut (Kg)
                             </label>
-                            <input type="date" id="datePeche" name="datePeche" required
-                                class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 ease-in-out py-2 px-3 border">
+                            <input type="number" id="poidBrut" name="poidBrut" required
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border">
                         </div>
 
-                        
+                         <div class="space-y-2">
+                            <label for="prixPlancher" class="block text-sm font-medium text-gray-700 mb-1">
+                                Prix Plancher (€)
+                            </label>
+                            <input type="text" id="prixPlancher" name="prixPlancher" required
+                                class="w-full rounded-md border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 py-2 px-3 border">
+                        </div>
+                        <div class="space-y-2">
+                            <label for="qualites" class="block text-sm font-medium text-gray-700 flex items-center">
+                                <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 mr-1 text-blue-500" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                                </svg>
+                                Qualité du lot
+                            </label>
+                            <select name="qualites" id="qualites">
+                            @foreach($qualites as $qualite)
+                            <option value="{{ $qualite->idQualite}}">
+                                Qualité : {{$qualite->specificationQualite}} ({{$qualite->libeleQualite}})
+                            </option>
+                            @endforeach
+                            <input type="hidden" name="idBateau" id="idBateau">
+                        </select>
+                        <input list="brow">
+                        <datalist id="brow">
+                            <option value="Internet Explorer">
+                            <option value="Firefox">
+                            <option value="Chrome">
+                            <option value="Opera">
+                            <option value="Safari">
+                            
+                        </datalist> 
+                        <!-- Liste permettant la recherche d'élément -->
                     </div>
 
                     <!-- Boutons d'action avec le style bleu original -->
@@ -127,4 +155,4 @@
             }
         });
     </script>
-</x-app-layout>
+</x-staff-layout>

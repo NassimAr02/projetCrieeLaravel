@@ -22,14 +22,14 @@ return new class extends Migration
             $table->float('prixEnchereMax');
             $table->date('dateEnchere');
             $table->time('heureDebutEnchere');
-            $table->integer('codeEtat');
+            $table->string('codeEtat')->default('non enchèrit');
             $table->unsignedBigInteger('idTaille');
-            $table->unsignedBigInteger('idPresentation');
+            $table->unsignedBigInteger('idPresentation')->nullable();;
             $table->unsignedBigInteger('idBac');
             $table->unsignedBigInteger('idQualite');
             $table->unsignedBigInteger('idEspece');
-            $table->unsignedBigInteger('idAcheteur');
-            $table->unsignedBigInteger('idPanier');
+            $table->unsignedBigInteger('idAcheteur')->nullable();;
+            $table->unsignedBigInteger('idPanier')->nullable();;
             $table->unsignedBigInteger('idCriee');
 
             $table->foreign(['idBateau','datePeche'])->references(['idBateau','datePeche'])->on('peche')->onDelete('cascade');

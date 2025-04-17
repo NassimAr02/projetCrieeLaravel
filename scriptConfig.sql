@@ -74,4 +74,4 @@ INSERT INTO espece (nomEspece, nomScientifiqueEspece, nomCommunEspece) VALUES
 ('Anchois', 'Engraulis encrasicolus', 'Anchois'),
 ('Bonite', 'Sarda sarda', 'Bonite à dos rayé');
 
--- lot(idPresentation,idAcheteur, idPanier ) null possible
+-- lot(idPresentation,idAcheteur, idPanier ,'prixEnchereMax','dateEnchere','heureDebutEnchere',) null possible

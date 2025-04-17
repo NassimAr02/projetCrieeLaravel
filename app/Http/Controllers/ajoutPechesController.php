@@ -34,14 +34,12 @@ class ajoutPechesController extends Controller
         if($req->typePeche == "cotiere"){
             PecheCotiere::create([
                 'datePeche' => $req -> datePeche,
-                'idBateau' => $idBateau,
-                'idPeche' =>$idBateau
+                'idBateau' => $idBateau
             ]);
         } else {
             PetitePeche::create([
                 'datePeche' => $req -> datePeche,
-                'idBateau' => $idBateau,
-                'idPeche' =>$idBateau
+                'idBateau' => $idBateau
             ]);
         }
         return redirect()->route('admin.dashboard')->with('success', 'Pêche ajoutée avec succès');

@@ -12,6 +12,7 @@ class PetitePeche extends Model
     protected $fillable = ['idBateau','datePeche'];
     public $incrementing = false; // Comme la clé primaire est composite, pas d'auto-incrémentation
     protected $primaryKey = null;
+    public $timestamps = false;
     public function peche()
     {
         return $this->belongsTo(Peche::class);
