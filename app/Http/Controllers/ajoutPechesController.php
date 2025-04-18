@@ -23,7 +23,7 @@ class ajoutPechesController extends Controller
             'datePeche' => 'required|date',
             'typePeche' => 'required'
         ]);
-        $idBateau = Bateau::where('nomBateau', $req->nomBateau)->first()->idBateau;
+        $idBateau = Bateau::where('nomBateau', $req->nomBateau)->value('idBateau');
         
 
         Peche::create([

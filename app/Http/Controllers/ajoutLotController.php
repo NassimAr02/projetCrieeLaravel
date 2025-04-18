@@ -11,6 +11,7 @@ use App\Models\Espece;
 use App\Models\Criee;
 use App\Models\Bateau;
 use App\Models\Peche;
+use App\Models\Lot;
 class ajoutLotController extends Controller
 {
     public function create($criee)
@@ -28,6 +29,21 @@ class ajoutLotController extends Controller
     }
     public function store(Request $req, $criee)
     {
-
+        $idLot = Lot::max('idLot');
+        $idLot +=1;        
+        Lot::create([
+            'idBateau' => $req->idBateau,
+            'datePeche' => $req->peches,
+            'idLot' => $idLot,
+            'poidsBrutLot' => $req->poidBrut,
+            'prixPlancher'=> $req->prixPlancher,
+            'prixDepart' => $req->prixDepart,
+            'idTaille' => $req->tailles,
+            'idBac' => $req->bacs,
+            'idQualite' => $req->qualites,
+            'idEspece' => $req->idEspece,
+            'idCriee' => $criee
+        ]);
+        return redirect()->route('admin.dashboard')->with('success', 'Lot ajouté avec succès');
     }
 }

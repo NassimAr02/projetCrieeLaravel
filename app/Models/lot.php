@@ -15,7 +15,7 @@
 
         public $timestamps=false;
 
-        protected $fillable = ['idBateau','datePeche','idLot','poidsBrutLot','prixPlancher','prixDepart','prixEnchereMax','dateEnchere','heureDebutEnchere','codeEtat','idTaille','idPresentation','idBac','idQualite','idEspece','idAcheteur','idPanier'];
+        protected $fillable = ['idBateau','datePeche','idLot','poidsBrutLot','prixPlancher','prixDepart','prixEnchereMax','dateEnchere','heureDebutEnchere','codeEtat','idTaille','idPresentation','idBac','idQualite','idEspece','idAcheteur','idPanier','idCriee'];
 
         public function peche()
         {

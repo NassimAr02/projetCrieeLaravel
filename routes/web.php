@@ -10,7 +10,8 @@ use App\Http\Controllers\AccueilAdminController;
 use App\Http\Controllers\ajoutBateauController;
 use App\Http\Controllers\ajoutLotController;
 use App\Http\Controllers\createCrieeController;     
-use App\Http\Controllers\ajoutPechesController;                
+use App\Http\Controllers\ajoutPechesController;  
+use App\Http\Controllers\nouvEspeceController;              
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
 Route::get('/accueil', function() { return view('welcome'); })->name('accueil');
@@ -53,6 +54,8 @@ Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::post('/ajoutBateau',[ajoutBateauController::class, 'store'])->name('admin.bateau.store');
     Route::get('/ajoutPeches',[ajoutPechesController::class, 'create'])->name('admin.ajoutPeches');
     Route::post('/ajoutPeches',[ajoutPechesController::class, 'store'])->name('admin.ajoutPeches.store');
+    Route::get('/ajoutEspece',[nouvEspeceController ::class, 'create'])->name('admin.ajoutEspece');
+    Route::post('/ajoutEspece',[nouvEspeceController ::class, 'store'])->name('admin.ajoutEspece.store');
 });
 
 // Routes commissaire
