@@ -10,6 +10,6 @@ class AcheteurQueryController extends Controller
     public function index()
     {
         $acheteurs = Acheteur::all();
-        return view('acheteur_accueil', compact('acheteur'));
+        return view('acheteur_accueil', compact('acheteurs'));
     }
 }
