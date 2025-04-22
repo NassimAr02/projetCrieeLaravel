@@ -10,13 +10,18 @@ use App\Http\Controllers\AccueilAdminController;
 use App\Http\Controllers\ajoutBateauController;
 use App\Http\Controllers\ajoutLotController;
 use App\Http\Controllers\createCrieeController;     
-use App\Http\Controllers\ajoutPechesController;  
-use App\Http\Controllers\nouvEspeceController;              
+use App\Http\Controllers\ajoutPechesController;
+use App\Http\Controllers\EnchereAcheteurQueryController;
+use App\Http\Controllers\nouvEspeceController;
+
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
 Route::get('/accueil', function() { return view('welcome'); })->name('accueil');
-Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres');
 Route::get('/acheteur', [AcheteurQueryController::class, 'index'])->name('acheteur_accueil');
+
+Route::get('/encheres', [EnchereAcheteurQueryController::class, 'index'])->name('enchere_acheteur');
+// Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres'); //Route qui fonctionne
+
 Route::get('/mentionLegale', function () { return view('mentionLegale'); })->name('mentionLegale');
 Route::get('/cgv', function () { return view('cgv'); })->name('cgv');
 
