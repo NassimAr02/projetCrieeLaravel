@@ -12,14 +12,18 @@ use App\Models\Espece;
 use App\Models\Panier;
 use App\Models\Criee;
 use App\Models\Bateau; //dmder plus tard pour id bateau
+use App\Models\Peche;
 
 class LotFactory extends Factory
 {
     public function definition(): array
     {
+        $peche = Peche::inRandomOrder()->first() ?? Peche::factory()->create();
+        
         return [
+
             'idLot' => $this->faker->randomNumber(), //Trouver un autre moyen pour l'id
-            'datePeche' => $this->faker->date('Y_m_d'), // Date aléatoire
+            
             // 'poidsBrutLot' => $this->faker->randomFloat(2, 1, 100), // Poids en kg (1 à 100 kg)
             'poidsBrutLot' => $this->faker->numerify('##-kg'), // Poids en kg (1 à 100 kg)
 
@@ -40,7 +44,12 @@ class LotFactory extends Factory
             'idAcheteur' => Acheteur::inRandomOrder()->first()?->idAcheteur ?? Acheteur::factory()->create()->idAcheteur,
             'idPanier' => Panier::inRandomOrder()->first()?->idPanier ?? Panier::factory()->create()->id,
             'idCriee' => Criee::inRandomOrder()->first()?->idCriee ?? Criee::factory()->create()->id,
-            'idBateau' => Bateau::inRandomOrder()->first()?->idBateau ?? Criee::factory()->create()->idBateau,
+            
+            // Clé étrangère composite
+            'idBateau' => $peche->idBateau,
+            'datePeche' => $peche->datePeche,
+
+            // 'datePeche' => $this->faker->date('Y_m_d'), // Date aléatoire
         ];
     }
 }
