@@ -20,8 +20,8 @@ return new class extends Migration
             $table->string('raisonSocialeEntreprise');
             $table->string('locRue');
             $table->string('rue');
-            $table->string('ville');
             $table->string('cp');
+            $table->string('ville');
             $table->string('numHabilitation');
         });
         Schema::create('password_reset_tokens', function (Blueprint $table) {
