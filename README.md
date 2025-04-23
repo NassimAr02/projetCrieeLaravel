@@ -1,3 +1,39 @@
+# Configuration de la machine virtuelle
+Importer la machine sur VirtualBox <br>
+
+Créer un dossier partagé avec le chemin suivant : C (ou D):\mondossier\www\ <br>
+
+### Sur VirtualBox 
+Paramètres de la machine virtuelle -> Dossiers Partagés <br>
+Chemin du dossier : C (ou D):\mondossier\www <br>
+Nom du dossier : www <br>
+
+### Lancer la machine virtuelle
+login : btssio <br>
+mdp : btssio <br>
+
+sudo mount -t vboxsf www /mnt/www <br>
+
+
+# Installation du projet
+Téléchargement de Laravel et autres nécessités (Composer, NPM ou node...) <br>
+https://laravel.com/docs/12.x#installing-php <br>
+
+### Cloner le projet dans le dossier partagé
+git clone git@github.com:NassimAr02/projetCrieeLaravel.git <br>
+
+### Installer les dépendances
+composer install <br>
+npm install <br>
+npm run build <br>
+
+### Fichier .env
+Récupérer le fichier .env sur le drive puis le placer à la racine du projet <br>
+
+# Ouverture du projet 
+Depuis la machine virtuelle récuperer l'ip : ip a <br>
+Ouvrir l'addresse suivante : http://192.168.xxx.xx/projetCrieeLaravel/public/<br>
+
 # Rappel configuration proxy pour le développement dans le réseau du lycée (windows)
 ## Pour git
 git config --global http.proxy http://xx.xx.xx.xx:xx/ <br>
@@ -8,8 +44,8 @@ SET HTTP_PROXY=xx.xx.xx.xx:xx <br>
 SET HTTPS_PROXY=xx.xx.xx.xx:xx <br>
 
 ## Pour NPM
-npm config set proxy http://10.129.254.254/ <br>
-npm config set https-proxy http://10.129.254.254/ <br>
+npm config set proxy http://xx.xxx.xxx.xxx/ <br>
+npm config set https-proxy http://xx.xxx.xxx.xxx/ <br>
 
 ## Revenir aux paramètres par défaut
 git config --global --unset https.proxy <br>
@@ -21,14 +57,7 @@ set HTTPS_PROXY= <br>
 npm config rm proxy <br>
 npm config rm https-proxy <br>
 
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
 
 ## About Laravel
 
