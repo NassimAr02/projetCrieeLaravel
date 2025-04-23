@@ -27,9 +27,11 @@ class StaffLayout extends Component
             return view('layouts.admin');
         } else if ($type ==='commissaire'){
             return view('layouts.commissaire');
+        } else {
+            // Par défaut
+            return view('layouts.app'); 
         }
 
-        // Par défaut
-        return view('layouts.app');
+       
     }
 }
