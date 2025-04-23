@@ -43,6 +43,11 @@ Route::middleware('guest')->group(function () {
 Route::post('/staff/logout', [loginController::class, 'logout'])
     ->middleware('staff.deco')
     ->name('staff.logout'); 
+
+
+// Routes acheteur
+
+
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AccueilAdminController::class, 'index'])->name('admin.dashboard');

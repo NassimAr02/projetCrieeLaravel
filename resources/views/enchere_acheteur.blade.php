@@ -73,7 +73,7 @@
             {{-- C'est le prix de depart, dmder a nassim s'il faut changer --}}
             <td>{{ $enchere->prixDepart }}</td> 
             <td>temps PLACEHOLDER</td>
-            <td><button>Entrer dans l'enchère</button>
+            <td><button>Entrer dans l'enchère</button></td>
           </tr>
         @endforeach
 
@@ -113,5 +113,4 @@
     
   </main>
 
-
-</x-app-layout>
+@endsection
