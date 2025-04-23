@@ -11,11 +11,6 @@
                 </div>
 
                 <!-- Navigation Links Communs -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('encheres')" :active="request()->routeIs('encheres')">
-                        {{ __('Enchères') }}
-                    </x-nav-link>
-                </div>
             </div>
 
             <!-- Partie Droite de la Navbar -->

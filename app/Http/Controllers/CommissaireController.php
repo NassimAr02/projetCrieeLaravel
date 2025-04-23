@@ -25,7 +25,7 @@ class CommissaireController extends Controller
             ->withCount('lots')
             ->first();
 
-        return view('commissaire_vente', compact('crieeJour', 'crieeAVenir'));
+        return view('commissaire.dashboard', compact('crieeJour', 'crieeAVenir'));
     }
 
     // public function pageVente($id)

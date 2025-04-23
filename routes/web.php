@@ -65,9 +65,10 @@ Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
 
 // Routes commissaire
 Route::middleware(['staff.auth:commissaire'])->prefix('commissaire')->group(function () {
-    Route::get('/dashboard', function () { return view('commissaire.dashboard'); })->name('commissaire.dashboard');
-    Route::get('/vente', [CommissaireController::class, 'index'])
-         ->name('commissaire.vente.index');
+    Route::get('/dashboard', [CommissaireController::class, 'index'])
+        ->name('commissaire.dashboard');
+    // Route::get('/vente', [CommissaireController::class, 'index'])
+    //      ->name('commissaire.vente.index');
     // Ajoutez d'autres routes commissaire ici
 });
 
