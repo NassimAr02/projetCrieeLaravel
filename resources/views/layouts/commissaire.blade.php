@@ -17,7 +17,7 @@
     </head>
     <body class="font-sans antialiased">
         <div class="min-h-screen bg-gray-100">
-            @include('layouts.navigationAdmin')
+            @include('layouts.navigationCommissaire')
 
             <!-- Page Heading -->
             @isset($header)

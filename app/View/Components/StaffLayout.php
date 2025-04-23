@@ -25,7 +25,9 @@ class StaffLayout extends Component
 
         if ($type === 'admin') {
             return view('layouts.admin');
-        } 
+        } else if ($type ==='commissaire'){
+            return view('layouts.commissaire');
+        }
 
         // Par défaut
         return view('layouts.app');
