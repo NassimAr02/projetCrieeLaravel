@@ -77,8 +77,8 @@
                                 <thead class="bg-gray-50">
                                     <tr>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Date</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Commencé à</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Fini à</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Heure début</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Heure fin</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase">Nombre de lots</th>
                                     </tr>
                                 </thead>
