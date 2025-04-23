@@ -49,7 +49,7 @@
                                 Pêche du {{ $peche->datePeche }} ({{ $peche->typePeche }})
                             </option>
                             @endforeach
-                            <input type="text" name="idBateau" id="idBateau">
+                            <input type="text" name="idBateau" id="idBateau" hidden>
                         </select>
                         </div>
 

@@ -13,14 +13,12 @@ use App\Http\Controllers\createCrieeController;
 use App\Http\Controllers\ajoutPechesController;
 use App\Http\Controllers\EnchereAcheteurQueryController;
 use App\Http\Controllers\nouvEspeceController;
+use App\Http\Controllers\AccueilAcheteurController;
 
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
 Route::get('/accueil', function() { return view('welcome'); })->name('accueil');
 Route::get('/acheteur', [AcheteurQueryController::class, 'index'])->name('acheteur_accueil');
-
-Route::get('/encheres', [EnchereAcheteurQueryController::class, 'index'])->name('encheres');
-// Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres'); //Route qui fonctionne
 
 Route::get('/mentionLegale', function () { return view('mentionLegale'); })->name('mentionLegale');
 Route::get('/cgv', function () { return view('cgv'); })->name('cgv');
@@ -45,8 +43,12 @@ Route::post('/staff/logout', [loginController::class, 'logout'])
     ->name('staff.logout'); 
 
 
+    
 // Routes acheteur
 
+// Route::get('/encheres', [EnchereAcheteurQueryController::class, 'index'])->name('encheres');
+// Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres'); //Route qui fonctionne
+Route::get('/encheres', [AccueilAcheteurController::class, 'index'])->name('enchere_acheteur');
 
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
