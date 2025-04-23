@@ -19,7 +19,7 @@ Route::get('/', function () { return view('welcome'); });
 Route::get('/accueil', function() { return view('welcome'); })->name('accueil');
 Route::get('/acheteur', [AcheteurQueryController::class, 'index'])->name('acheteur_accueil');
 
-Route::get('/encheres', [EnchereAcheteurQueryController::class, 'index'])->name('enchere_acheteur');
+Route::get('/encheres', [EnchereAcheteurQueryController::class, 'index'])->name('encheres');
 // Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres'); //Route qui fonctionne
 
 Route::get('/mentionLegale', function () { return view('mentionLegale'); })->name('mentionLegale');
