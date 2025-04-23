@@ -6,13 +6,13 @@ use App\Http\Controllers\CommissaireController;
 use App\Http\Controllers\loginController;
 use Illuminate\Support\Facades\Route;
 use Illuminate\Support\Facades\DB;
-use App\Http\Controllers\AccueilAdminController;
-use App\Http\Controllers\ajoutBateauController;
-use App\Http\Controllers\ajoutLotController;
-use App\Http\Controllers\createCrieeController;     
-use App\Http\Controllers\ajoutPechesController;
+use App\Http\Controllers\Admin\AccueilAdminController;
+use App\Http\Controllers\Admin\ajoutBateauController;
+use App\Http\Controllers\Admin\ajoutLotController;
+use App\Http\Controllers\Admin\createCrieeController;     
+use App\Http\Controllers\Admin\ajoutPechesController;
 use App\Http\Controllers\EnchereAcheteurQueryController;
-use App\Http\Controllers\nouvEspeceController;
+use App\Http\Controllers\Admin\nouvEspeceController;
 use App\Http\Controllers\AccueilAcheteurController;
 
 // Routes publiques
