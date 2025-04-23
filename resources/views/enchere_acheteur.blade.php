@@ -1,8 +1,9 @@
-@extends("layouts.layout")
-
-@section("title","Criée en cours")
-
-@section("content")
+<x-app-layout>
+  <x-slot name="header">
+      <h2 class="font-semibold text-xl text-gray-800 leading-tight">
+          {{ __('Dashboard') }}
+      </h2>
+  </x-slot>
 
 {{-- Trouver un moyen pour que le CSS FONCTIONNE grace au fichier style.css --}}
 <style>
@@ -112,4 +113,5 @@
     
   </main>
 
-@endsection
+
+</x-app-layout>
