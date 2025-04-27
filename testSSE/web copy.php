@@ -80,5 +80,7 @@ Route::middleware(['staff.auth:commissaire'])->prefix('commissaire')->group(func
     //      ->name('commissaire.vente.index');
     // Ajoutez d'autres routes commissaire ici
 });
-
+// Route::get('envoiNotif',[NotificationsController::class,'index']);
+// Route::post('create-notification',[NotificationsController::class,'create']);
+// Route::get('/sse-updates',[sseController::class,'envoiSSE']);
 require __DIR__.'/auth.php';
