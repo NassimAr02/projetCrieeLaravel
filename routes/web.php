@@ -13,7 +13,11 @@ use App\Http\Controllers\Admin\createCrieeController;
 use App\Http\Controllers\Admin\ajoutPechesController;
 use App\Http\Controllers\EnchereAcheteurQueryController;
 use App\Http\Controllers\Admin\nouvEspeceController;
-use App\Http\Controllers\AccueilAcheteurController;
+
+//Controllers Acheteurs
+use App\Http\Controllers\Acheteur\AccueilAcheteurController;
+use App\Http\Controllers\Acheteur\LotAcheteurController;
+
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\sseController;
 
@@ -50,7 +54,8 @@ Route::post('/staff/logout', [loginController::class, 'logout'])
 
 // Route::get('/encheres', [EnchereAcheteurQueryController::class, 'index'])->name('encheres');
 // Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres'); //Route qui fonctionne
-Route::get('/encheres', [AccueilAcheteurController::class, 'index'])->name('enchere_acheteur');
+Route::get('/encheres', [AccueilAcheteurController::class, 'index'])->name('acheteur.enchere_acheteur');
+Route::get('/lots', [LotAcheteurController::class, 'index'])->name('acheteur.lot_acheteur');
 
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
