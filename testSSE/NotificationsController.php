@@ -12,7 +12,8 @@ class NotificationsController extends Controller
     public function index()
     {
         $acheteurs = Acheteur::all();
-        return view('sse',compact('acheteurs'));
+        $lots = Lot::all();
+        return view('sse',compact('acheteurs',''));
     }
 
     public function create(Request $req)

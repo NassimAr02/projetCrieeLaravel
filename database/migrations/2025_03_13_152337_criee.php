@@ -19,9 +19,9 @@ return new class extends Migration
             $table->string('poidsBrutLot');
             $table->float('prixPlancher');
             $table->float('prixDepart');
-            $table->float('prixEnchereMax');
-            $table->date('dateEnchere');
-            $table->time('heureDebutEnchere');
+            $table->float('prixEnchereMax')->nullable();
+            $table->date('dateEnchere')->nullable();
+            $table->time('heureDebutEnchere')->nullable();
             $table->string('codeEtat')->default('non enchèrit');
             $table->unsignedBigInteger('idTaille');
             $table->unsignedBigInteger('idPresentation')->nullable();;
