@@ -9,7 +9,7 @@ class Notifications extends Model
     protected $table ='notifications';
     protected $primaryKey ='idNotif';
     public $timestamps =false;
-    protected $fillable = ['idNotif','message','idBateau','datePeche','idLot','idAcheteur'];
+    protected $fillable = ['idNotif','message','estPoster','idBateau','datePeche','idLot','idAcheteur'];
 
     public function acheteur()
     {

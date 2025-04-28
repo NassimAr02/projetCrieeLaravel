@@ -9,7 +9,7 @@
             @foreach ($acheteurs as $acheteur)
                 <option value="{{ $acheteur->idAcheteur }}">{{$acheteur->loginA}}</option>
         </select>
-    </div>
+    </div>          
     <div class="col-nd-4">
         <input type="text" id="message" class="form-control">
     </div>

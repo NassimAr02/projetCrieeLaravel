@@ -65,7 +65,7 @@ class SseEnchereController extends Controller
                 ->where('idLot', $idLot)
                 ->first();
 
-            if ($lot && $lot->estTermine) {
+            if ($lot && $lot->codeEtat == "Cloturé") {
                 echo "event: fin_enchere\n";
                 echo "data: L'enchère est terminée\n\n";
                 ob_flush();

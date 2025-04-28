@@ -12,9 +12,14 @@ return new class extends Migration
     public function up(): void
     {
         Schema::create('notifications', function (Blueprint $table) {
-            $table->id();
+            $table->unsignedBigInteger('idAcheteur');
+            $table->unsignedBigInteger('idLot');
+            $table->unsignedBigInteger('idBateau');
+            $table->date('datePeche');
+            $table->id('idNotif');
             $table->string('message')->nullable(false);
-            $table->foreignId('idAcheteur')->nullable(false);
+            $table->foreign('idAcheteur')->references('idAcheteur')->on('acheteur')->onDelete('cascade');
+            $table->foreign(['idBateau','datePeche','idLot'])->references(['idBateau','datePeche','idLot'])->on('lot')->onDelete('cascade');
             $table->boolean('estPoster')->nullable(false);
             $table->timestamps();
         });
