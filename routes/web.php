@@ -57,7 +57,13 @@ Route::post('/staff/logout', [loginController::class, 'logout'])
 // Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres'); //Route qui fonctionne
 Route::get('/encheres', [AccueilAcheteurController::class, 'index'])->name('acheteur.enchere_acheteur');
 Route::get('/lots', [LotAcheteurController::class, 'index'])->name('acheteur.lot_acheteur');
-Route::post('/encherir', [EncherirController::class, 'store'])->name('encherir.store');
+// Route::post('/encherir', [EnchereController::class, 'store'])->name('encherir'); // Pour enchérir
+Route::post('/encherir', [SseEnchereController::class, 'placerEnchere'])
+     ->name('encherir')
+     ->middleware('auth');
+
+Route::get('/Acheteur/enchere/suivre', [SseEnchereController::class, 'suivreEnchere'])
+     ->name('acheteur.SSE.suivreEnchere');
 
 
 Route::get('/SseEnchere',[SseEnchereController::class,'suivreEnchere'])->name('acheteur.SSE.suivreEnchere');

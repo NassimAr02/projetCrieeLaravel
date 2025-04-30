@@ -14,19 +14,18 @@ class SseEnchereController extends Controller
 {
     public function suivreEnchere(Request $request)
     {
-        // Récupération des paramètres
         $idAcheteur = $request->idAcheteur;
         $idBateau = $request->idBateau;
         $datePeche = $request->datePeche;
         $idLot = $request->idLot;
 
-        // Configuration SSE
+        // Headers SSE
         header('Content-Type: text/event-stream');
         header('Cache-Control: no-cache');
         header('Connection: keep-alive');
         header('X-Accel-Buffering: no');
 
-        // Vérification de l'acheteur
+        // Vérification de l'existence de l'acheteur
         $acheteur = Acheteur::find($idAcheteur);
         if (!$acheteur) {
             echo "event: error\n";
@@ -36,9 +35,18 @@ class SseEnchereController extends Controller
             return;
         }
 
-        // Boucle de surveillance des enchères
+        // Dernier prix connu pour comparaison
+        $dernierPrix = null;
+        $dernierAcheteur = null;
+        $dernierHeure = null;
+
         while (true) {
-            // Récupération de la dernière enchère pour ce lot
+            // Vérifie si la connexion client est encore active
+            if (connection_aborted()) {
+                break;
+            }
+
+            // Récupère la dernière enchère pour ce lot
             $derniereEnchere = Poster::where('idBateau', $idBateau)
                 ->where('datePeche', $datePeche)
                 ->where('idLot', $idLot)
@@ -47,20 +55,33 @@ class SseEnchereController extends Controller
                 ->first();
 
             if ($derniereEnchere) {
-                $eventData = [
-                    'type' => 'mise_a_jour_enchere',
-                    'prixEnchere' => $derniereEnchere->prixEnchere,
-                    'heureEnchere' => $derniereEnchere->heureEnchere,
-                    'idAcheteur' => $derniereEnchere->idAcheteur,
-                    'estVotreEnchere' => ($derniereEnchere->idAcheteur == $idAcheteur),
-                    'datePeche' => $derniereEnchere->datePeche,
-                    'idLot' => $derniereEnchere->idLot
-                ];
+                $prix = $derniereEnchere->prixEnchere;
+                $acheteurEnchere = $derniereEnchere->idAcheteur;
+                $heure = $derniereEnchere->heureEnchere;
 
-                echo "data: " . json_encode($eventData) . "\n\n";
+                // Envoie uniquement si l'enchère a changé
+                if ($prix != $dernierPrix || $acheteurEnchere != $dernierAcheteur || $heure != $dernierHeure) {
+                    $dernierPrix = $prix;
+                    $dernierAcheteur = $acheteurEnchere;
+                    $dernierHeure = $heure;
+
+                    $eventData = [
+                        'type' => 'mise_a_jour_enchere',
+                        'prixEnchere' => $prix,
+                        'heureEnchere' => $heure,
+                        'idAcheteur' => $acheteurEnchere,
+                        'estVotreEnchere' => ($acheteurEnchere == $idAcheteur),
+                        'datePeche' => $derniereEnchere->datePeche,
+                        'idLot' => $derniereEnchere->idLot
+                    ];
+
+                    echo "data: " . json_encode($eventData) . "\n\n";
+                    ob_flush();
+                    flush();
+                }
             }
 
-            // Vérification si l'enchère est terminée (vous devrez adapter cette logique)
+            // Vérifie si le lot est clôturé
             $lot = Lot::where('idBateau', $idBateau)
                 ->where('datePeche', $datePeche)
                 ->where('idLot', $idLot)
@@ -74,59 +95,63 @@ class SseEnchereController extends Controller
                 break;
             }
 
-            ob_flush();
-            flush();
-            
-            // Pause avant la prochaine vérification
             sleep(1);
-
-            if (connection_aborted()) {
-                break;
-            }
         }
     }
+
 
     public function placerEnchere(Request $request)
     {
-        $request->validate([
+        $validated = $request->validate([
             'idAcheteur' => 'required|exists:acheteur,idAcheteur',
-            'idBateau' => 'required',
+            'idBateau' => 'required|exists:lot,idBateau',
             'datePeche' => 'required|date',
-            'idLot' => 'required',
-            'prixEnchere' => 'required|numeric|min:0'
+            'idLot' => 'required|exists:lot,idLot',
+            'prixEnchere' => 'required|numeric|min:0.01' // Minimum 1 centime
         ]);
 
-        // Vérifier si le lot existe
-        $lot = Lot::where('idBateau', $request->idBateau)
-            ->where('datePeche', $request->datePeche)
-            ->where('idLot', $request->idLot)
+        $lot = Lot::where('idBateau', $validated['idBateau'])
+            ->where('datePeche', $validated['datePeche'])
+            ->where('idLot', $validated['idLot'])
+            ->firstOrFail();
+
+        if ($lot->codeEtat == "Cloturé") {
+            return response()->json([
+                'success' => false,
+                'message' => 'L\'enchère pour ce lot est terminée'
+            ], 400);
+        }
+
+        $derniereEnchere = Poster::where('idBateau', $validated['idBateau'])
+            ->where('datePeche', $validated['datePeche'])
+            ->where('idLot', $validated['idLot'])
+            ->orderBy('prixEnchere', 'desc')
             ->first();
 
-        if (!$lot) {
-            return response()->json(['error' => 'Lot non trouvé'], 404);
+        $prixMinimum = $derniereEnchere ? $derniereEnchere->prixEnchere : $lot->prixDepart;
+
+        if ($validated['prixEnchere'] <= $prixMinimum) {
+            return response()->json([
+                'success' => false,
+                'message' => 'Le prix doit être supérieur à '.number_format($prixMinimum, 2).'€'
+            ], 400);
         }
 
-        // Vérifier si l'enchère est toujours ouverte
-        if ($lot->estTermine) {
-            return response()->json(['error' => 'L\'enchère pour ce lot est terminée'], 400);
-        }
-
-        // Créer la nouvelle enchère
-        $enchere = new Poster();
-        $enchere->idAcheteur = $request->idAcheteur;
-        $enchere->idBateau = $request->idBateau;
-        $enchere->datePeche = $request->datePeche;
-        $enchere->idLot = $request->idLot;
-        $enchere->prixEnchere = $request->prixEnchere;
-        $enchere->heureEnchere = Carbon::now()->toTimeString();
-        $enchere->save();
+        $enchere = Poster::create([
+            'idAcheteur' => $validated['idAcheteur'],
+            'idBateau' => $validated['idBateau'],
+            'datePeche' => $validated['datePeche'],
+            'idLot' => $validated['idLot'],
+            'prixEnchere' => $validated['prixEnchere'],
+            'heureEnchere' => now()->toTimeString()
+        ]);
 
         return response()->json([
-            'success' => 'Enchère placée avec succès',
-            'enchere' => $enchere
+            'success' => true,
+            'message' => 'Enchère placée avec succès',
+            'newPrice' => $validated['prixEnchere']
         ]);
     }
-
     public function ajouterAuPanier(Request $request)
     {
         $request->validate([
