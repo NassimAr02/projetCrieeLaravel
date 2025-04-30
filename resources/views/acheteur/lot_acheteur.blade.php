@@ -133,5 +133,7 @@
     </div>
   
     </main>
-  
+  <script>
+    const eventSource = new EventSource("{{ route('acheteur.SSE.suivreEnchere') }}?idAcheteur={{ $idAcheteur }}&idBateau={{ $idBateau }}&datePeche={{ $datePeche }}&idLot={{ $idLot }}");
+  </script>
   </x-app-layout>

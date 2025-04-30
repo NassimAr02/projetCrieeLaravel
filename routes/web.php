@@ -17,7 +17,7 @@ use App\Http\Controllers\Admin\nouvEspeceController;
 //Controllers Acheteurs
 use App\Http\Controllers\Acheteur\AccueilAcheteurController;
 use App\Http\Controllers\Acheteur\LotAcheteurController;
-
+use App\Http\Controllers\Acheteur\SseEnchereController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\sseController;
 
@@ -59,6 +59,7 @@ Route::get('/lots', [LotAcheteurController::class, 'index'])->name('acheteur.lot
 // Route::post('/encherir', [EnchereController::class, 'store'])->name('encherir'); // Pour enchérir
 
 
+Route::get('/SseEnchere',[SseEnchereController::class,'suivreEnchere'])->name('acheteur.SSE.suivreEnchere');
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AccueilAdminController::class, 'index'])->name('admin.dashboard');

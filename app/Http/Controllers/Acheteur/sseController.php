@@ -1,8 +1,9 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Acheteur;
 
 use Illuminate\Http\Request;
+use App\Http\Controllers\Controller;
 use App\Models\Acheteur;
 use App\Models\Poster;
 use App\Models\Panier;

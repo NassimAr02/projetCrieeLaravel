@@ -19,4 +19,8 @@
         {
             return $this->belongsTo(Lot::class,['idBateau','datePeche','idLot'],['idBateau','datePeche','idLot']);
         }
+        public function Acheteur()
+        {
+            return $this->belongsTo(Acheteur::class,['idAcheteur'],['idAcheteur']);
+        }
     }
