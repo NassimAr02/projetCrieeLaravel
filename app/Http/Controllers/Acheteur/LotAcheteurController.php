@@ -6,7 +6,10 @@ use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Criee;
 use App\Models\Lot;
+use App\Models\Poster;
 use Carbon\Carbon;
+// use App\Http\Controllers\Acheteur\DB;
+use Illuminate\Support\Facades\DB;
 class LotAcheteurController extends Controller
 {
     
@@ -27,10 +30,15 @@ class LotAcheteurController extends Controller
            ->where('idCriee', $prochaineCriee->idCriee)
            ->first();
 
+        // On récupère les enchères max groupées par lot
+        $prixMaxParLot = Poster::select('idLot', DB::raw('MAX(prixEnchere) as prix_max'))
+        ->groupBy('idLot')
+        ->pluck('prix_max', 'idLot'); // Associe idLot => prix_max
+
         $idAcheteur = auth()->id(); 
 
 
-        return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees','lot','idAcheteur'));
+        return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees','lot', 'prixMaxParLot','idAcheteur'));
     }
         
 }

@@ -7,8 +7,6 @@
   
     <!-- Contenu principal -->
     <main>
-        <input type="text" value="{{ $idAcheteur }}" hidden> {{-- ID de l'acheteur connecté --}}
-
       <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Carte principale avec ombre douce -->
@@ -48,7 +46,6 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qualité</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Espèce</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix actuel</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID ACHETEUR TEST</th> {{-- Supprimer --}}
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Votre prix</th>
                                     </tr>
                                 </thead>
@@ -61,17 +58,47 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->taille->specification ?? '—'  }}</td> {{-- idTaille --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->qualite->libeleQualite ?? '—'  }}</td> {{-- idQualite --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->espece->nomCommunEspece ?? '—'  }}</td> {{-- idEspece --}}
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ '0€' }}</td> 
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500"> {{ $prixMaxParLot[$lot->idLot] ?? '0€' }}</td> 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"> {{-- Bouton --}}
                                             <div class="flex space-x-2">
-                                                <input type="number" name="prixEnchere" id="prixEnchere" min="{{ $lot->prixDepart }}"> {{-- Changer le prix min --}}
-                                                <a href="{{ route('admin.ajoutLot.create', ['criee' => $prochaineCriee->idCriee]) }}" 
+                                                
+                                                <form action="{{ route('encherir.store') }}" method="POST">
+                                                    @csrf
+                                                    {{-- Valeurs hidden --}}
+                                                    <input type="hidden" name="idBateau" value="{{ $lot->idBateau }}">
+                                                    <input type="hidden" name="datePeche" value="{{ $lot->datePeche }}">
+                                                    <input type="hidden" name="idLot" value="{{ $lot->idLot }}">
+                                                    <input type="hidden" name="idAcheteur" value="{{ auth()->user()->idAcheteur }}">
+
+                                                    <input type="number" name="prixEnchere" min="{{ $prixMaxParLot[$lot->idLot] ?? $lot->prixDepart }}" required>
+                                                
+                                                    <button type="submit"
+                                                        class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white"
+                                                        style="background-color: #2563eb;"
+                                                        onmouseover="this.style.backgroundColor='#1d4ed8'"
+                                                        onmouseout="this.style.backgroundColor='#2563eb'">
+                                                        Enchérir
+                                                    </button>
+                                                </form>
+                                                
+
+
+
+
+
+
+
+
+                                                {{-- Ancienne version du bouton --}}
+                                                {{-- Changer le prix min --}}
+                                                {{-- <input type="number" name="prixEnchere" id="prixEnchere" min="{{ $lot->prixDepart }}"> 
+                                                <button href="{{ route('admin.ajoutLot.create', ['criee' => $prochaineCriee->idCriee]) }}" 
                                                     class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
                                                     style="background-color: #2563eb;"
                                                     onmouseover="this.style.backgroundColor='#1d4ed8'" 
-                                                    onmouseout="this.style.backgroundColor='#2563eb'">
+                                                    onmouseout="this.style.backgroundColor='#2563eb'" type="submit">
                                                     Enchérir 
-                                                </a>
+                                                </button> --}}
                                             </div>
                                         </td>
                                     </tr>
