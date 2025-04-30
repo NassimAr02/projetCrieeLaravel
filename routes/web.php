@@ -56,10 +56,8 @@ Route::post('/staff/logout', [loginController::class, 'logout'])
 // Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres'); //Route qui fonctionne
 Route::get('/encheres', [AccueilAcheteurController::class, 'index'])->name('acheteur.enchere_acheteur');
 Route::get('/lots', [LotAcheteurController::class, 'index'])->name('acheteur.lot_acheteur');
-// Route::post('/encherir', [EnchereController::class, 'store'])->name('encherir'); // Pour enchérir
+Route::post('/lots',[LotAcheteurController::class, 'store'])->name('acheteur.encherir.store');
 
-
-Route::get('/SseEnchere',[SseEnchereController::class,'suivreEnchere'])->name('acheteur.SSE.suivreEnchere');
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AccueilAdminController::class, 'index'])->name('admin.dashboard');

@@ -32,5 +32,8 @@ class LotAcheteurController extends Controller
 
         return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees','lot','idAcheteur'));
     }
+    public function store(){
+        
+    }
         
 }
