@@ -7,87 +7,8 @@
   
     <!-- Contenu principal -->
     <main>
-  
-      {{-- TABLE 1 --}}
-      {{-- <table>
-        <thead>
-          <tr>
-            <th>DATE
-            <th>Commencé à
-            <th>Fin à
-            <th>Article
-            <th>Prix actuel
-            <th>Temps restant
-            <th>
-        </thead>
-        <tbody> --}}
-          {{-- @foreach ($encheres as $enchere)
-            <tr>
-              <td>{{ $enchere->datePeche }}</td>
-              <td>{{ $enchere->heureDebutEnchere }}</td>
-              <td>HEUREFIN PLACEHOLDER</td>
-              <td>nom article PLACEHOLDER</td> --}}
-  
-              {{-- C'est le prix de depart, dmder a nassim s'il faut changer --}}
-              {{-- <td>{{ $enchere->prixDepart }}</td>  --}}
-              {{-- <td>temps PLACEHOLDER</td>
-              <td><button>Entrer dans l'enchère</button></td>
-            </tr> --}}
-          {{-- @endforeach --}}
-  
-          {{-- <tr>
-            <td>date
-            <td>heuredebut
-            <td>heurefin
-            <td>nom article
-            <td>PRIX de l'enchere
-            <td>temps 
-            <td><button>Entrer dans l'enchère</button> --}}
-  
-  
-        {{-- </tbody>
-      </table> --}}
-  
-      {{-- TABLE 2 --}}
-      {{-- <table>
-        <thead>
-          <tr>
-            <th>DATE</th>
-            <th>Commencé à</th>
-            <th>Fin à</th>
-            <th>Temps restant</th>
-        </thead>
-        <tbody>
-          <tr>
-            <td>date</td>
-            <td>heuredebut</td>
-            <td>heurefin</td>
-            <td>PRIX de l'enchere</td>
-            <td><button>Entrer dans l'enchère</button></td>
-        </tbody>
-      </table> --}}
-  
-      {{-- TABLE 3 --}}
-      {{-- <table>
-        <thead>
-          <tr>
-            <th>DATE
-            <th>Commencé à
-            <th>Fin à
-            <th>Article
-            <th>Prix actuel
-        </thead>
-        <tbody>
-          <tr>
-            <td>date
-            <td>heuredebut
-            <td>heurefin
-            <td>nom article
-            <td>PRIX de l'enchere
-        </tbody>
-      </table> --}}
-      
-  
+        <input type="text" value="{{ $idAcheteur }}" hidden> {{-- ID de l'acheteur connecté --}}
+
       <div class="py-6">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <!-- Carte principale avec ombre douce -->
@@ -127,7 +48,8 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qualité</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Espèce</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix actuel</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID ACHETEUR TEST</th> {{-- Supprimer --}}
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Votre prix</th>
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -142,12 +64,13 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ '0€' }}</td> 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"> {{-- Bouton --}}
                                             <div class="flex space-x-2">
+                                                <input type="number" name="prixEnchere" id="prixEnchere" min="{{ $lot->prixDepart }}"> {{-- Changer le prix min --}}
                                                 <a href="{{ route('admin.ajoutLot.create', ['criee' => $prochaineCriee->idCriee]) }}" 
                                                     class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
                                                     style="background-color: #2563eb;"
                                                     onmouseover="this.style.backgroundColor='#1d4ed8'" 
                                                     onmouseout="this.style.backgroundColor='#2563eb'">
-                                                    Entrer dans l'enchère
+                                                    Enchérir 
                                                 </a>
                                             </div>
                                         </td>

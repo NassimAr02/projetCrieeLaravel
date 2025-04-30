@@ -27,8 +27,10 @@ class LotAcheteurController extends Controller
            ->where('idCriee', $prochaineCriee->idCriee)
            ->first();
 
+        $idAcheteur = auth()->id(); 
 
-        return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees','lot'));
+
+        return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees','lot','idAcheteur'));
     }
         
 }
