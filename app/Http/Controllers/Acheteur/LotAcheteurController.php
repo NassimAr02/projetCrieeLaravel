@@ -23,8 +23,10 @@ class LotAcheteurController extends Controller
                     ->orderBy('dateCriee')
                     ->get();
 
-        $lot = Lot::where('idCriee',$prochaineCriee -> idCriee)
-                    ->first();
+        $lot = Lot::with(['qualite', 'espece', 'taille'])
+           ->where('idCriee', $prochaineCriee->idCriee)
+           ->first();
+
 
         return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees','lot'));
     }
