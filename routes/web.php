@@ -20,6 +20,7 @@ use App\Http\Controllers\Acheteur\LotAcheteurController;
 use App\Http\Controllers\Acheteur\SseEnchereController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\sseController;
+use App\Http\Controllers\Acheteur\EncherirController;
 
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
@@ -56,7 +57,8 @@ Route::post('/staff/logout', [loginController::class, 'logout'])
 // Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres'); //Route qui fonctionne
 Route::get('/encheres', [AccueilAcheteurController::class, 'index'])->name('acheteur.enchere_acheteur');
 Route::get('/lots', [LotAcheteurController::class, 'index'])->name('acheteur.lot_acheteur');
-Route::post('/lots',[LotAcheteurController::class, 'store'])->name('acheteur.encherir.store');
+// Route::post('/lots',[LotAcheteurController::class, 'store'])->name('acheteur.encherir.store');
+Route::post('/encherir', [EncherirController::class, 'store'])->name('encherir.store');
 
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {

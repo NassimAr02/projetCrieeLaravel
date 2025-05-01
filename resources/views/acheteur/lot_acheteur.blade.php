@@ -35,7 +35,7 @@
                         </svg>
                         Lot en cours
                     </h3>
-                    <form action="{{ route('acheteur.encherir.store') }}" method="POST">
+
                     @if($prochaineCriee)
                     <input type="text" name="idLot" id="idLot" value = "{{ $lot->idLot }}" hidden>
                     <input type="date" name="datePeche" id="datePeche" value = "{{ $lot->datePeche }}" hidden>
@@ -52,7 +52,6 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qualité</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Espèce</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix actuel</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">ID ACHETEUR TEST</th> {{-- Supprimer --}}
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Votre prix</th>
                                     </tr>
                                 </thead>
@@ -65,19 +64,31 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->taille->specification ?? '—'  }}</td> {{-- idTaille --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->qualite->libeleQualite ?? '—'  }}</td> {{-- idQualite --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->espece->nomCommunEspece ?? '—'  }}</td> {{-- idEspece --}}
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ '0€' }}</td> 
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $prixMaxParLot[$lot->idLot].'€' ?? '0€' }}</td> 
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"> {{-- Bouton --}}
-                                            <div class="flex space-x-2">
-                                                <input type="number" name="prixEnchere" id="prixEnchere" min="{{ $lot->prixDepart }}"> {{-- Changer le prix min --}}
+                                        
+                                        <div class="flex space-x-2">
+                                            <form action="{{ route('encherir.store') }}" method="POST">
+                                                @csrf
+                                                {{-- Valeurs hidden --}}
+                                                <input type="hidden" name="idBateau" value="{{ $lot->idBateau }}">
+                                                <input type="hidden" name="datePeche" value="{{ $lot->datePeche }}">
+                                                <input type="hidden" name="idLot" value="{{ $lot->idLot }}">
+                                                <input type="hidden" name="idAcheteur" value="{{ auth()->user()->idAcheteur }}">
+
+                                                <input type="number" name="prixEnchere" min="{{ $prixMaxParLot[$lot->idLot] ?? $lot->prixDepart+1 }}" style="width: 50%;" required>
+                                            
                                                 <button type="submit"
-                                                    class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                                                    class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white"
                                                     style="background-color: #2563eb;"
-                                                    onmouseover="this.style.backgroundColor='#1d4ed8'" 
+                                                    onmouseover="this.style.backgroundColor='#1d4ed8'"
                                                     onmouseout="this.style.backgroundColor='#2563eb'">
-                                                    Enchérir 
-                                            </button>
-                                            </div>
+                                                    Enchérir
+                                                </button>
+                                            </form>
+                                        </div>
                                         </td>
+                                        
                                     </tr>
                                 </tbody>
                             </table>
@@ -89,9 +100,7 @@
                             <p class="mt-1 text-sm text-gray-500">Commencez par créer une nouvelle criée</p>
                         </div>
                     @endif
-                </div>
-            </form>
-                
+                </div>    
             </div>
         </div>
     </div>
