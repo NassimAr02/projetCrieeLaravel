@@ -1,3 +1,6 @@
+{{-- Pour rafraichir la page  --}}
+{{-- {{header("Refresh: 15");}} --}}
+
 <x-app-layout>
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <x-slot name="header">
