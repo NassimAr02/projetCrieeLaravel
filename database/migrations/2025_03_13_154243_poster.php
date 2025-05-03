@@ -16,12 +16,16 @@ return new class extends Migration
             $table->unsignedBigInteger('idBateau');
             $table->date('datePeche');
             $table->unsignedBigInteger('idLot');
-            $table->string('prixEnchere');
-        
-            $table->time('heureEnchere')->nullable();
+            $table->decimal('prixEnchere', 10, 2);
+            $table->timestamp('tempsEnregistrement', $precision = 6)->useCurrent(); // Précision microsecondes
+            
             $table->foreign('idAcheteur')->references('idAcheteur')->on('acheteur')->onDelete('cascade');
             $table->foreign(['idBateau','datePeche','idLot'])->references(['idBateau','datePeche','idLot'])->on('lot')->onDelete('cascade');
-            $table->primary(['idAcheteur','idBateau','datePeche','idLot']);
+            
+            $table->primary(['idAcheteur','idBateau','datePeche','idLot','tempsEnregistrement']);
+            
+            $table->index('tempsEnregistrement');
+            $table->index('prixEnchere');
         });
     }
 

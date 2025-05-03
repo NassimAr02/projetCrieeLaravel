@@ -13,7 +13,7 @@
 
         public $timestamps = false;
 
-        protected $fillable = ['idAcheteur','idBateau','datePeche','idLot','prixEnchere','heureEnchere'];
+        protected $fillable = ['idAcheteur','idBateau','datePeche','idLot','prixEnchere','heureEnchere','tempsEnregistrement'];
 
         public function Lot()
         {
