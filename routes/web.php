@@ -21,6 +21,8 @@ use App\Http\Controllers\Acheteur\SseEnchereController;
 use App\Http\Controllers\NotificationsController;
 use App\Http\Controllers\sseController;
 use App\Http\Controllers\Acheteur\EncherirController;
+use App\Http\Controllers\factureController;
+use App\Http\Controllers\panierController;
 
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
@@ -32,7 +34,7 @@ Route::get('/cgv', function () { return view('cgv'); })->name('cgv');
 
 // Routes authentifiées (acheteurs)
 Route::middleware('auth')->group(function () {
-    Route::get('/dashboard', function () { return view('dashboard'); })->name('dashboard');
+    Route::get('/dashboard', [AccueilAcheteurController::class, 'index'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
@@ -59,6 +61,8 @@ Route::get('/encheres', [AccueilAcheteurController::class, 'index'])->name('ache
 Route::get('/lots', [LotAcheteurController::class, 'index'])->name('acheteur.lot_acheteur');
 // Route::post('/lots',[LotAcheteurController::class, 'store'])->name('acheteur.encherir.store');
 Route::post('/encherir', [EncherirController::class, 'store'])->name('encherir.store');
+Route::get('/facture',[factureController::class, 'index'])->name('acheteur.factures');
+Route::get('/panier',[panierController::class, 'index'])->name('acheteur.panier');
 
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {

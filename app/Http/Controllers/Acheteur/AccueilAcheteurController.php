@@ -26,7 +26,7 @@ class AccueilAcheteurController extends Controller
         $lot = Lot::where('idCriee',$prochaineCriee -> idCriee)
                     ->get();
 
-        return view('acheteur.enchere_acheteur', compact('prochaineCriee', 'criees','lot'));
+        return view('acheteur.dashboard', compact('prochaineCriee', 'criees','lot'));
     }
         
 }

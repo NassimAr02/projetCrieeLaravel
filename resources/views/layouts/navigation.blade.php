@@ -11,11 +11,11 @@
                 </div>
 
                 <!-- Navigation Links Communs -->
-                <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
                     <x-nav-link :href="route('acheteur.enchere_acheteur')" :active="request()->routeIs('acheteur.enchere_acheteur')">
                         {{ __('Enchères') }}
                     </x-nav-link>
-                </div>
+                </div> --}}
             </div>
 
             <!-- Partie Droite de la Navbar -->
@@ -35,6 +35,12 @@
                         </x-slot>
 
                         <x-slot name="content">
+                            <x-dropdown-link :href="route('acheteur.factures')">
+                                {{ __('Facture') }}
+                            </x-dropdown->
+                            <x-dropdown-link :href="route('acheteur.panier')">
+                                {{ __('Panier') }}
+                            </x-dropdown->
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profil') }}
                             </x-dropdown-link>

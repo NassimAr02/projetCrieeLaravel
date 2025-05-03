@@ -42,7 +42,10 @@
                                 </svg>
                                 Date de la criée
                             </label>
-                            <input type="date" id="dateCriee" name="dateCriee" required
+                            <input type="date" 
+                            name="dateCriee"
+                            id="dateCriee"
+                            value="{{ old('dateCriee', now()->format('Y-m-d')) }}" required
                                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 ease-in-out py-2 px-3 border">
                         </div>
 
@@ -53,7 +56,10 @@
                                 </svg>
                                 Heure de début
                             </label>
-                            <input type="time" id="heureDebut" name="heureDebut" required
+                            <input type="time" 
+                            name="heureDebut"
+                            id="heureDebut"
+                            value="{{ old('heureDebut', now()->format('H:i')) }}" required
                                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 ease-in-out py-2 px-3 border">
                         </div>
 
@@ -105,25 +111,43 @@
     <!-- Script pour calcul automatique de l'heure de fin -->
     <script>
         document.addEventListener('DOMContentLoaded', function() {
-            const heureDebut = document.getElementById('heureDebut');
-            const nbLot = document.getElementById('nbLot');
-            const heureFin = document.getElementById('heureFin');
-            
-            function calculerHeureFin() {
-                if (heureDebut.value && nbLot.value) {
-                    const [heures, minutes] = heureDebut.value.split(':').map(Number);
-                    const dureeParLot = 5; // 5 minutes par lot (à ajuster)
-                    const totalMinutes = heures * 60 + minutes + (nbLot.value * dureeParLot);
-                    
-                    const hFin = Math.floor(totalMinutes / 60) % 24;
-                    const mFin = totalMinutes % 60;
-                    
-                    heureFin.value = `${String(hFin).padStart(2, '0')}:${String(mFin).padStart(2, '0')}`;
-                }
+        const dateInput = document.getElementById('dateCriee');
+        const heureInput = document.getElementById('heureDebut');
+        
+        // Bloquer les dates passées
+        dateInput.min = new Date().toISOString().split('T')[0];
+        
+        // Adapter l'heure minimum si date = aujourd'hui
+        dateInput.addEventListener('change', function() {
+            if (this.value === new Date().toISOString().split('T')[0]) {
+                const now = new Date();
+                now.setMinutes(now.getMinutes() + 5); // Marge de 5 min
+                heureInput.min = now.toTimeString().substring(0, 5);
+                heureInput.value = now.toTimeString().substring(0, 5);
+            } else {
+                heureInput.removeAttribute('min');
+                heureInput.value = '';
             }
-            
-            heureDebut.addEventListener('change', calculerHeureFin);
-            nbLot.addEventListener('input', calculerHeureFin);
         });
+        
+        // Calcul automatique heure de fin (existant)
+        const nbLot = document.getElementById('nbLot');
+        const heureFin = document.getElementById('heureFin');
+        
+        function calculerHeureFin() {
+            if (heureInput.value && nbLot.value) {
+                const [h, m] = heureInput.value.split(':').map(Number);
+                const totalMinutes = h * 60 + m + (nbLot.value * 5);
+                
+                const hFin = Math.floor(totalMinutes / 60) % 24;
+                const mFin = totalMinutes % 60;
+                
+                heureFin.value = `${String(hFin).padStart(2, '0')}:${String(mFin).padStart(2, '0')}`;
+            }
+        }
+        
+        heureInput.addEventListener('change', calculerHeureFin);
+        nbLot.addEventListener('input', calculerHeureFin);
+    });
     </script>
 </x-staff-layout>

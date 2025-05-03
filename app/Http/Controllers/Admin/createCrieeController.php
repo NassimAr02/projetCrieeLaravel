@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Criee;
+use Carbon\Carbon;
 class createCrieeController extends Controller
 {
     public function index(){
@@ -12,18 +13,18 @@ class createCrieeController extends Controller
             
         ]);  
     }
-    public function store(Request $req){
-        
-        $req->validate([
-            'dateCriee'=> 'required|date',
-            'heureDebut' => 'required|date_format:H:i',  // Format heure:minute
-            'heureFin' => 'required|date_format:H:i|after:heureDebut',
-        ]); 
-        Criee::create([
-            'dateCriee'=> $req->dateCriee,
-            'heureDebut'=> $req->heureDebut,
-            'heureFin'=> $req->heureFin,
+    public function store(Request $request)
+    {
+        // Désactivez temporairement TOUTE validation de date/heure
+        $validated = $request->validate([
+            'dateCriee' => 'required|date',
+            'heureDebut' => 'required',
+            'heureFin' => 'required',
         ]);
-        return redirect()->route('admin.dashboard')->with('success', 'Criee ajoutée avec succès');
+
+        Criee::create($validated);
+        
+        return redirect()->route('admin.dashboard')
+            ->with('success', 'Criée créée avec succès !');
     }
 }
