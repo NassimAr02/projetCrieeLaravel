@@ -17,11 +17,10 @@ use App\Http\Controllers\Admin\nouvEspeceController;
 //Controllers Acheteurs
 use App\Http\Controllers\Acheteur\AccueilAcheteurController;
 use App\Http\Controllers\Acheteur\LotAcheteurController;
-use App\Http\Controllers\Acheteur\SseEnchereController;
-use App\Http\Controllers\NotificationsController;
-use App\Http\Controllers\sseController;
+use App\Http\Controllers\lotCommissaire;
 use App\Http\Controllers\Acheteur\EncherirController;
 use App\Http\Controllers\factureController;
+use App\Http\Controllers\lotCommissaireController;
 use App\Http\Controllers\panierController;
 
 // Routes publiques
@@ -88,6 +87,8 @@ Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
 Route::middleware(['staff.auth:commissaire'])->prefix('commissaire')->group(function () {
     Route::get('/dashboard', [CommissaireController::class, 'index'])
         ->name('commissaire.dashboard');
+    Route::get('/debuterVente',[lotCommissaireController::class,'index'])->name('commissaire.debuterVente');
+    Route::post('/lancerVente',[lotCommissaireController::class,'gererEnchere'])->name('commissaire.gererEnchère');
     // Route::get('/vente', [CommissaireController::class, 'index'])
     //      ->name('commissaire.vente.index');
     // Ajoutez d'autres routes commissaire ici

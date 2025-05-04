@@ -34,19 +34,19 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($crieeJour as $criee)
                                         <tr class="hover:bg-gray-50 transition">
-                                            <td class="px-6 py-4 text-sm text-gray-900">{{ \Carbon\Carbon::parse($criee->dateCriee)->format('d/m/Y') }}</td>
-                                            <td class="px-6 py-4 text-sm text-gray-600">{{ $criee->heureDebut }}</td>
-                                            <td class="px-6 py-4 text-sm text-gray-600">{{ $criee->heureFin }}</td>
+                                            <td class="px-6 py-4 text-sm text-gray-900" id="dateDebut">{{ \Carbon\Carbon::parse($criee->dateCriee)->format('d/m/Y') }}</td>
+                                            <td class="px-6 py-4 text-sm text-gray-600" id="heureDebut">{{ $criee->heureDebut }}</td>
+                                            <td class="px-6 py-4 text-sm text-gray-600" id="heureFin">{{ $criee->heureFin }}</td>
                                             <td class="px-6 py-4 text-sm text-gray-600">{{ $criee->lots_count }}</td>
                                             <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">
                                                 <div class="flex space-x-2">
-                                                    <button type="button"
-                                                            class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
-                                                            style="background-color: #2563eb;"
-                                                            onmouseover="this.style.backgroundColor='#1d4ed8'" 
-                                                            onmouseout="this.style.backgroundColor='#2563eb'">
-                                                        Débuter la vente
-                                                    </button>
+                                                    <a href="{{ route('commissaire.debuterVente', ['criee' => $criee->idCriee]) }}" 
+                                                        class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition duration-150 ease-in-out"
+                                                        style="background-color: #2563eb;"
+                                                        onmouseover="this.style.backgroundColor='#1d4ed8'" 
+                                                        onmouseout="this.style.backgroundColor='#2563eb'" id="boutonRedir">
+                                                        Entrer dans l'enchère
+                                                    </a>
                                                 </div>
                                             </td>
                                         </tr>
@@ -102,4 +102,22 @@
             </div>
         </div>
     </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const dateDebut = document.getElementById('dateDebut').dataset.date;
+            const heureDebut = document.getElementById('heureDebut').innerText;
+            const heureFin = document.getElementById('heureFin').innerText;
+            const button = document.getElementById('boutonRedir');
+    
+            const dateDebutTime = new Date(`${dateDebut}T${heureDebut}`);
+            const dateFinTime = new Date(`${dateDebut}T${heureFin}`);
+            const maintenant = new Date();
+    
+            if (maintenant < dateDebutTime || maintenant > dateFinTime) {
+                button.setAttribute('disabled', 'disabled');
+            } else {
+                button.removeAttribute('disabled');
+            }
+        });
+    </script>
 </x-app-layout>

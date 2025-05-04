@@ -22,7 +22,7 @@ return new class extends Migration
             $table->float('prixEnchereMax')->nullable();
             $table->date('dateEnchere')->nullable();
             $table->time('heureDebutEnchere')->nullable();
-            $table->string('codeEtat')->default('non enchèrit');
+            $table->string('codeEtat')->default('En attente');
             $table->unsignedBigInteger('idTaille');
             $table->unsignedBigInteger('idPresentation')->nullable();;
             $table->unsignedBigInteger('idBac');
