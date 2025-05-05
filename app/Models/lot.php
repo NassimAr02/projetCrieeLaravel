@@ -10,13 +10,20 @@
         use HasFactory;
         protected $table ='lot';
         // protected $table ='peche';
-
+        protected $primaryKey = ['idBateau','datePeche','idLot'];
         public $incrementing = false;
 
         public $timestamps=false;
 
         protected $fillable = ['idBateau','datePeche','idLot','poidsBrutLot','prixPlancher','prixDepart','prixEnchereMax','dateEnchere','heureDebutEnchere','codeEtat','idTaille','idPresentation','idBac','idQualite','idEspece','idAcheteur','idPanier','idCriee'];
 
+        public static function findComposite($idBateau, $datePeche, $idLot)
+        {
+            return self::where('idBateau', $idBateau)
+                    ->where('datePeche', $datePeche)
+                    ->where('idLot', $idLot)
+                    ->first();
+        }
         public function peche()
         {
             return $this->belongsTo(Peche::class,['idBateau','datePeche'],['idBateau','datePeche']);

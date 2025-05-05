@@ -87,8 +87,10 @@ Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
 Route::middleware(['staff.auth:commissaire'])->prefix('commissaire')->group(function () {
     Route::get('/dashboard', [CommissaireController::class, 'index'])
         ->name('commissaire.dashboard');
-    Route::get('/debuterVente',[lotCommissaireController::class,'index'])->name('commissaire.debuterVente');
-    Route::post('/lancerVente',[lotCommissaireController::class,'gererEnchere'])->name('commissaire.gererEnchère');
+    Route::get('/commissaire/debuter-vente/{criee}', [lotCommissaireController::class, 'index'])->name('commissaire.debuterVente');
+    Route::post('/lancerVente',[lotCommissaireController::class,'debutEnchere'])->name('commissaire.debutEnchere');
+    Route::post('/ascendante',[lotCommissaireController::class,'enchereAscendante'])->name('commissaire.ascendante');
+    Route::post('/cloture',[lotCommissaireController::class,'finEnchere'])->name('commissaire.cloturerLot');
     // Route::get('/vente', [CommissaireController::class, 'index'])
     //      ->name('commissaire.vente.index');
     // Ajoutez d'autres routes commissaire ici

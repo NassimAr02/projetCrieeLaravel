@@ -59,7 +59,7 @@
                             <input type="time" 
                             name="heureDebut"
                             id="heureDebut"
-                            value="{{ old('heureDebut', now()->format('H:i')) }}" required
+                            value="{{ old('heureDebut', \Carbon\Carbon::now('Europe/Paris')->format('H:i')) }}" required
                                 class="mt-1 block w-full rounded-lg border-gray-300 shadow-sm focus:border-blue-500 focus:ring-blue-500 transition duration-150 ease-in-out py-2 px-3 border">
                         </div>
 

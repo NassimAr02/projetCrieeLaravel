@@ -12,16 +12,17 @@ class accueilAdminController extends Controller
    // Charge les criees avenir
    public function index() 
    {
-        // 1. Utilisez startOfDay() pour inclure toute la journée actuelle
-        $today = Carbon::now()->startOfDay();
-        
-        // 2. Modification des requêtes
-        $prochaineCriee = Criee::where('dateCriee', '>=', $today)
+        // Obtenez la date et l'heure actuelles
+        $maintenant = Carbon::now('Europe/Paris');
+
+        // Récupérez la prochaine criée (future ou en cours)
+        $prochaineCriee = Criee::whereRaw("CONCAT(dateCriee, ' ', heureDebut) >= ?", [$maintenant])
                         ->orderBy('dateCriee')
                         ->orderBy('heureDebut')
                         ->first();
-        
-        $criees = Criee::where('dateCriee', '>=', $today)
+
+        // Récupérez toutes les criées futures ou en cours
+        $criees = Criee::whereRaw("CONCAT(dateCriee, ' ', heureDebut) >= ?", [$maintenant])
                     ->orderBy('dateCriee')
                     ->orderBy('heureDebut')
                     ->get();

@@ -39,8 +39,9 @@
                         Lot en cours
                     </h3>
 
-                    @if($prochaineCriee)
-                    <input type="text" name="idLot" id="idLot" value = "{{ $lot->idLot }}" hidden>
+                    @if($prochaineCriee && $lot)
+                    <!-- Afficher le contenu de la criée -->
+                    <input type="text" name="idLot" id="idLot" value="{{ $lot->idLot }}" hidden>
                     <input type="date" name="datePeche" id="datePeche" value = "{{ $lot->datePeche }}" hidden>
                     <input type="text" name="idBateau" id="idBateau" value = "{{ $lot->idBateau }}" hidden>
                         <div class="overflow-x-auto rounded-lg border border-gray-200">
@@ -55,7 +56,9 @@
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qualité</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Espèce</th>
                                         <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix actuel</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Votre prix</th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
+                                        
                                     </tr>
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
@@ -67,31 +70,50 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->taille->specification ?? '—'  }}</td> {{-- idTaille --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->qualite->libeleQualite ?? '—'  }}</td> {{-- idQualite --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->espece->nomCommunEspece ?? '—'  }}</td> {{-- idEspece --}}
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ isset($prixMaxParLot[$lot->idLot]) ? $prixMaxParLot[$lot->idLot].'€' : $lot->prixDepart.'€' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                            {{ isset($prixMaxParLot[$lot->idLot]) ? $prixMaxParLot[$lot->idLot].'€' : $lot->prixDepart.'€' }}
+                                        </td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"> {{-- Bouton --}}
                                         
                                         <div class="flex space-x-2">
-                                            <form action="{{ route('commissaire.gererEnchère') }}" method="POST">
+                                            <form action="{{ route('commissaire.ascendante') }}" method="POST">
                                                 @csrf
                                                 {{-- Valeurs hidden --}}
                                                 <input type="hidden" name="idBateau" value="{{ $lot->idBateau }}">
                                                 <input type="hidden" name="datePeche" value="{{ $lot->datePeche }}">
                                                 <input type="hidden" name="idLot" value="{{ $lot->idLot }}">
                                                 
-
-                                                <input type="number" name="prixEnchere" min="{{ isset($prixMaxParLot[$lot->idLot]) ? $prixMaxParLot[$lot->idLot] + 1 : $lot->prixDepart + 1 }}" style="width: 50%;" required>
                                             
                                                 <button type="submit"
                                                     class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white"
                                                     style="background-color: #ebac25;"
                                                     onmouseover="this.style.backgroundColor='#1d4ed8'"
-                                                    onmouseout="this.style.backgroundColor='#2563eb'">
-                                                    Enchère Ascendante
+                                                    onmouseout="this.style.backgroundColor='#ebac25'">
+                                                    Ascendante
                                                 </button>
                                             </form>
                                         </div>
                                         </td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"> {{-- Bouton --}}
                                         
+                                            <div class="flex space-x-2">
+                                                <form action="{{ route('commissaire.cloturerLot') }}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="idBateau" value="{{ $lot->idBateau }}">
+                                                    <input type="hidden" name="datePeche" value="{{ $lot->datePeche->format('Y-m-d') }}">
+                                                    <input type="hidden" name="idLot" value="{{ $lot->idLot }}">
+                                                    
+                                                
+                                                    <button type="submit"
+                                                        class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white"
+                                                        style="background-color: #f72828;"
+                                                        onmouseover="this.style.backgroundColor='#1d4ed8'"
+                                                        onmouseout="this.style.backgroundColor='#f72828'">
+                                                        Cloturer
+                                                    </button>
+                                                </form>
+                                            </div>
+                                            </td>
                                     </tr>
                                 </tbody>
                             </table>
@@ -99,7 +121,7 @@
                     @else
                         <div class="text-center py-8 bg-gray-50 rounded-lg border border-gray-200">
                             
-                            <h4 class="mt-2 text-sm font-medium text-gray-700">Aucune criée programmée</h4>
+                            <h4 class="mt-2 text-sm font-medium text-gray-700">Aucun lot programmée</h4>
                             <p class="mt-1 text-sm text-gray-500">Commencez par créer une nouvelle criée</p>
                         </div>
                     @endif

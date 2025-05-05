@@ -15,6 +15,6 @@ class Criee extends Model
 
     public function lots()
     {
-        return $this->hasMany(Lot::class,'idCriee');
+        return $this->hasMany(Lot::class, 'idCriee');
     }
 }
