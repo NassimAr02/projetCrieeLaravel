@@ -51,7 +51,7 @@
 
         <!-- LocRue -->
         <div class="mt-4">
-            <x-input-label for="locRue" :value="__('Localisation Rue')" />
+            <x-input-label for="locRue" :value="__('Numéro de  Rue')" />
             <x-text-input id="locRue" class="block mt-1 w-full" type="text" name="locRue" :value="old('locRue')" required autocomplete="locRue" />
             <x-input-error :messages="$errors->get('locRue')" class="mt-2" />
         </div>
@@ -62,7 +62,12 @@
             <x-text-input id="rue" class="block mt-1 w-full" type="text" name="rue" :value="old('rue')" required autocomplete="rue" />
             <x-input-error :messages="$errors->get('rue')" class="mt-2" />
         </div>
-
+        <!-- Code Postal -->
+        <div class="mt-4">
+            <x-input-label for="cp" :value="__('Code Postal')" />
+            <x-text-input id="cp" class="block mt-1 w-full" type="text" name="cp" :value="old('cp')" required autocomplete="cp" />
+            <x-input-error :messages="$errors->get('cp')" class="mt-2" />
+        </div>
         <!-- Ville -->
         <div class="mt-4">
             <x-input-label for="ville" :value="__('Ville')" />
@@ -70,12 +75,7 @@
             <x-input-error :messages="$errors->get('ville')" class="mt-2" />
         </div>
 
-        <!-- Code Postal -->
-        <div class="mt-4">
-            <x-input-label for="cp" :value="__('Code Postal')" />
-            <x-text-input id="cp" class="block mt-1 w-full" type="text" name="cp" :value="old('cp')" required autocomplete="cp" />
-            <x-input-error :messages="$errors->get('cp')" class="mt-2" />
-        </div>
+        
 
         <!-- NumHabilitation -->
         <div class="mt-4">
