@@ -10,7 +10,7 @@ use App\Models\Poster;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
-
+use App\Models\Panier;
 class lotCommissaireController extends Controller
 {
     public function index($criee) {
@@ -31,7 +31,9 @@ class lotCommissaireController extends Controller
                     ->where('idBateau', $lotEnAttente->idBateau)
                     ->where('datePeche', $lotEnAttente->datePeche)
                     ->where('idLot', $lotEnAttente->idLot)
-                    ->update(['codeEtat' => 'En vente']);
+                    ->update(['codeEtat' => 'En vente'],
+                            ['dateEnchere' => Carbon::now('Europe/Paris')->format('Y-m-d')],
+                            ['heureDebutEnchere' => Carbon::now('Europe/Paris')->format('H:i:s')]);
                 
                 // Récupérer le lot mis à jour
                 $lot = Lot::where('idBateau', $lotEnAttente->idBateau)
@@ -69,54 +71,60 @@ class lotCommissaireController extends Controller
     }
     
 
-    // public function debutEnchere(Request $req)
-    // {
-    //     $validated = $req->validate([
-    //         'idBateau' => 'required|exists:lot,idBateau',
-    //         'datePeche' => 'required|exists:lot,datePeche',
-    //         'idLot' => 'required|exists:lot,idLot',
-    //     ]);
-    
-    //     // Mise à jour directe avec update()
-    //     $updated = Lot::where('idBateau', $validated['idBateau'])
-    //                   ->where('datePeche', $validated['datePeche'])
-    //                   ->where('idLot', $validated['idLot'])
-    //                   ->update(['codeEtat' => 'En vente']);
-    
-    //     if ($updated) {
-  
-    //         return back()->with('success', 'Enchère terminée.');
-    //     } else {
-    //         return back()->with('error', 'Impossible de terminer l\'enchère.');
-    //     }
-    // }
-    public function enchereAscendante(Request $req)
+    public function enchereDescendante(Request $req)
     {
+        // Validation des données
         $validated = $req->validate([
             'idBateau' => 'required|exists:lot,idBateau',
             'datePeche' => 'required|exists:lot,datePeche',
             'idLot' => 'required|exists:lot,idLot',
             'idAcheteur' => 'required|exists:acheteur,idAcheteur',
         ]);
-        $prixEnchere = DB::table('lot')
+
+        // Récupérer le dernier prix enchéri ou le prix de départ
+        $dernierPrix = Poster::where('idLot', $validated['idLot'])
+            ->orderBy('tempsEnregistrement', 'desc')
+            ->value('prixEnchere');
+
+        if (!$dernierPrix) {
+            // Si aucune enchère n'existe, utiliser le prix de départ
+            $dernierPrix = DB::table('lot')
+                ->where('idLot', $validated['idLot'])
+                ->value('prixDepart');
+        }
+
+        // Décrémentation de 2 euros
+        $nouveauPrix = $dernierPrix - 2;
+
+        // Vérifier que le prix ne descend pas en dessous du prix plancher
+        $prixPlancher = DB::table('lot')
             ->where('idLot', $validated['idLot'])
-            ->value('prixDepart');
-        $prixEnchere = $prixEnchere - 2 ; // Décrémentation de 1 euro
-        
-        // Insertion dans la table enchere
+            ->value('prixPlancher');
+
+        if ($nouveauPrix < $prixPlancher) {
+            return back()->with('error', 'Le prix ne peut pas descendre en dessous du prix plancher.');
+        }
+
+        // Insérer une nouvelle enchère dans la table Poster
         Poster::create([
             'idBateau' => $validated['idBateau'],
             'datePeche' => $validated['datePeche'],
             'idLot' => $validated['idLot'],
-            'idAcheteur' => $validated['idAcheteur'],
-            'prixEnchere' => $prixEnchere,
+            'idAcheteur' => 999, // ID spécial pour enchères automatiques
+            'prixEnchere' => $nouveauPrix,
         ]);
 
-        return back()->with('success', 'Enchère en cours.');
+        // Mettre à jour le prix actuel dans la table Lot
+        Lot::where('idLot', $validated['idLot'])
+            ->update(['prixEnchereMax' => $nouveauPrix]);
+
+        return back()->with('success', 'Enchère descendante enregistrée avec succès.');
     }
 
         public function finEnchere(Request $req)
         {
+            $auj8 = Carbon::now('Europe/Paris')->format('Y-m-d');
+            $aujHeure = Carbon::now('Europe/Paris')->format('H:i:s');
             $validated = $req->validate([
                 'idBateau' => 'required|exists:lot,idBateau',
                 'datePeche' => 'required|exists:lot,datePeche',
@@ -127,17 +135,34 @@ class lotCommissaireController extends Controller
                 ->where('idLot', $validated['idLot'])
                 ->orderBy('tempsEnregistrement', 'desc')
                 ->first();
-            if ($dernierSaisie) {}
+           
+            
             // Mise à jour directe avec update()
             $updated = Lot::where('idBateau', $validated['idBateau'])
                           ->where('datePeche', $validated['datePeche'])
                           ->where('idLot', $validated['idLot'])
                           ->update(['codeEtat' => 'Terminee']);
                           if ($dernierSaisie) {
+                            $lePanier = Panier::where('idAcheteur', $dernierSaisie->idAcheteur)
+                                ->orderBy('idPanier', 'desc')
+                                ->first();
+
+                            if ($lePanier) {
+                                $lePanier->update(['total' => $dernierSaisie->prixEnchere]);
+                            } else {
+                                // Si aucun panier n'existe, vous pouvez en créer un ou gérer l'erreur
+                                $lePanier = Panier::create([
+                                    'idAcheteur' => $dernierSaisie->idAcheteur,
+                                    'total' => $dernierSaisie->prixEnchere,
+                                ]);
+                            }
                             $updated2 = Lot::where('idBateau', $validated['idBateau'])
                                           ->where('datePeche', $validated['datePeche'])
                                           ->where('idLot', $validated['idLot'])
-                                          ->update(['prixEnchereMax' => $dernierSaisie->prixEnchere]);
+                                          ->update(['prixEnchereMax' => $dernierSaisie->prixEnchere, 
+                                                    'idAcheteur' => $dernierSaisie->idAcheteur,
+                                                    'idPanier' => $lePanier->idPanier]);
+                            
                         } else {
                             $prixPlancher = Lot::where('idBateau', $validated['idBateau'])
                                                ->where('datePeche', $validated['datePeche'])

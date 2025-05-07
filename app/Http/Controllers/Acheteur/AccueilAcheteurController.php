@@ -12,7 +12,8 @@ class AccueilAcheteurController extends Controller
     
    // Charge les criees avenir
     public function index() {
-        $prochaineCriee = Criee::where('dateCriee', '>=', Carbon::now())
+        $auj8 = Carbon::now('Europe/Paris')->format('Y-m-d');
+        $prochaineCriee = Criee::where('dateCriee', '>=', $auj8)
                         ->orderBy('dateCriee')
                         ->first();
         // Conversion manuelle si nécessaire
@@ -23,10 +24,10 @@ class AccueilAcheteurController extends Controller
                     ->orderBy('dateCriee')
                     ->get();
         
-        $lot = Lot::where('idCriee',$prochaineCriee -> idCriee)
-                    ->get();
+        // $lot = Lot::where('idCriee',$prochaineCriee -> idCriee)
+        //             ->get();'lot'
 
-        return view('acheteur.dashboard', compact('prochaineCriee', 'criees','lot'));
+        return view('acheteur.dashboard', compact('prochaineCriee', 'criees'));
     }
         
 }

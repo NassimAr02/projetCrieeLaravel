@@ -76,7 +76,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"> {{-- Bouton --}}
                                         
                                         <div class="flex space-x-2">
-                                            <form action="{{ route('commissaire.ascendante') }}" method="POST">
+                                            <form action="{{ route('commissaire.Descendante') }}" method="POST">
                                                 @csrf
                                                 {{-- Valeurs hidden --}}
                                                 <input type="hidden" name="idBateau" value="{{ $lot->idBateau }}">
@@ -89,7 +89,7 @@
                                                     style="background-color: #ebac25;"
                                                     onmouseover="this.style.backgroundColor='#1d4ed8'"
                                                     onmouseout="this.style.backgroundColor='#ebac25'">
-                                                    Ascendante
+                                                    Descendante
                                                 </button>
                                             </form>
                                         </div>

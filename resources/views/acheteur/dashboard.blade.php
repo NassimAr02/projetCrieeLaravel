@@ -106,7 +106,12 @@
                         <p class="text-sm text-gray-600 mt-1">Liste des criées programmées</p>
                     </div>
                 </div>
-  
+                @if(session('error'))
+                    <div class="bg-red-100 border border-red-400 text-red-700 px-4 py-3 rounded relative" role="alert">
+                        <strong class="font-bold">Erreur :</strong>
+                        <span class="block sm:inline">{{ session('error') }}</span>
+                    </div>
+                @endif
                 <!-- Section Prochaine Criée -->
                 <div class="p-6 border-b border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
