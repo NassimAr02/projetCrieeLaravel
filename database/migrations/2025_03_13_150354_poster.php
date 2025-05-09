@@ -15,6 +15,8 @@ return new class extends Migration
             $table->unsignedBigInteger('idAcheteur');
             $table->id('idPanier');
             $table->date('datePanier')->default(now());
+            $table->boolean('estFacture')->default(false);
+            $table->date('dateFacture')->nullable();
             $table->float('total');
             $table->foreign('idAcheteur')->references('idAcheteur')->on('acheteur')->onDelete('cascade');
         });

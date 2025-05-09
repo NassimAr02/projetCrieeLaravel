@@ -53,13 +53,14 @@ class LotAcheteurController extends Controller
    
        $idAcheteur = auth()->id();
    
-       // Créer un panier si nécessaire
-       Panier::firstOrCreate([
-           'idAcheteur' => $idAcheteur,
-       ], [
-           'total' => 0,
-       ]);
-   
+    $panierEnCours = Panier::where('idAcheteur', $idAcheteur)
+                    ->where('datePanier','=', $auj8)
+                    ->first();
+       if (!$panierEnCours) {
+            Panier::create([
+                'idAcheteur' => $idAcheteur,
+                'total' => 0
+            ]);
        return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees', 'lot',  'idAcheteur'));
    }
     
