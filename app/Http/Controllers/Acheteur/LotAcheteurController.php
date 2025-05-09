@@ -38,10 +38,18 @@ class LotAcheteurController extends Controller
            return back()->with('error', 'Le lot sélectionné n\'est pas encore disponible pour enchérir.');
        }
    
-       // On récupère les enchères max groupées par lot
-       $prixMaxParLot = Poster::select('idLot', DB::raw('MAX(prixEnchere) as prix_max'))
-           ->groupBy('idLot')
-           ->pluck('prix_max', 'idLot'); // Associe idLot => prix_max
+       if ($lot) {
+        // Récupérer le dernier prix enchéri pour le lot en vente
+        $dernierPrix = Poster::where('idBateau', $lot->idBateau)
+            ->where('datePeche', $lot->datePeche)
+            ->where('idLot', $lot->idLot)
+            ->orderBy('tempsEnregistrement', 'desc')
+            ->value('prixEnchere');
+    
+        // Si aucun prix n'est trouvé, utilisez le prix de départ
+        $lot->prixActuel = $dernierPrix ?? $lot->prixDepart;
+
+
    
        $idAcheteur = auth()->id();
    
@@ -52,9 +60,10 @@ class LotAcheteurController extends Controller
            'total' => 0,
        ]);
    
-       return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees', 'lot', 'prixMaxParLot', 'idAcheteur'));
+       return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees', 'lot',  'idAcheteur'));
    }
     
+}
 }
         
 

@@ -136,7 +136,7 @@
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $prochaineCriee->idCriee }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" id="dateDebut" data-date="{{ $prochaineCriee->dateCriee->format('Y-m-d') }}">>{{ \Carbon\Carbon::parse($prochaineCriee->dateCriee)->format('d/m/Y') }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" id="dateDebut" data-date="{{ $prochaineCriee->dateCriee->format('Y-m-d') }}">{{ \Carbon\Carbon::parse($prochaineCriee->dateCriee)->format('d/m/Y') }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" id="heureDebut" name="heureDebut">{{ $prochaineCriee->heureDebut }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500" id="heureFin" name="heureFin">{{ $prochaineCriee->heureFin }}</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium">

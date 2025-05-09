@@ -67,7 +67,7 @@
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->taille->specification ?? '—'  }}</td> {{-- idTaille --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->qualite->libeleQualite ?? '—'  }}</td> {{-- idQualite --}}
                                         <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->espece->nomCommunEspece ?? '—'  }}</td> {{-- idEspece --}}
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ isset($prixMaxParLot[$lot->idLot]) ? $prixMaxParLot[$lot->idLot].'€' : $lot->prixDepart.'€' }}</td>
+                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $lot->prixActuel }} €</td>
                                         <td class="px-6 py-4 whitespace-nowrap text-sm font-medium"> {{-- Bouton --}}
                                         
                                         <div class="flex space-x-2">
@@ -79,7 +79,7 @@
                                                 <input type="hidden" name="idLot" value="{{ $lot->idLot }}">
                                                 <input type="hidden" name="idAcheteur" value="{{ auth()->user()->idAcheteur }}">
 
-                                                <input type="number" name="prixEnchere" min="{{ isset($prixMaxParLot[$lot->idLot]) ? $prixMaxParLot[$lot->idLot] + 1 : $lot->prixDepart + 1 }}" style="width: 50%;" required>
+                                                <input type="number" name="prixEnchere" min="{{ $lot->prixActuel + 1 }}" style="width: 50%;" required>
                                             
                                                 <button type="submit"
                                                     class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white"

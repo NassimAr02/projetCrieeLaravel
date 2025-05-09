@@ -13,58 +13,68 @@ use Illuminate\Support\Facades\Log;
 use App\Models\Panier;
 class lotCommissaireController extends Controller
 {
+
     public function index($criee) {
         try {
             // Récupérer la criée
             $prochaineCriee = Criee::findOrFail($criee);
-            
-            // Récupérer directement tous les lots liés à cette criée
-            // sans passer par la relation
+
+            // Récupérer un lot "En attente"
             $lotEnAttente = Lot::where('idCriee', $criee)
-                             ->where('codeEtat', 'En attente')
-                             ->first();
-            
-            // Vérifier si un lot a été trouvé
+                ->where('codeEtat', 'En attente')
+                ->first();
+
             if ($lotEnAttente) {
-                // Mise à jour manuelle pour éviter les problèmes
+                // Mettre à jour le lot "En attente" pour le passer "En vente"
                 DB::table('lot')
                     ->where('idBateau', $lotEnAttente->idBateau)
                     ->where('datePeche', $lotEnAttente->datePeche)
                     ->where('idLot', $lotEnAttente->idLot)
-                    ->update(['codeEtat' => 'En vente'],
-                            ['dateEnchere' => Carbon::now('Europe/Paris')->format('Y-m-d')],
-                            ['heureDebutEnchere' => Carbon::now('Europe/Paris')->format('H:i:s')]);
-                
+                    ->update([
+                        'codeEtat' => 'En vente',
+                        'dateEnchere' => Carbon::now('Europe/Paris')->format('Y-m-d'),
+                        'heureDebutEnchere' => Carbon::now('Europe/Paris')->format('H:i:s'),
+                    ]);
+
                 // Récupérer le lot mis à jour
                 $lot = Lot::where('idBateau', $lotEnAttente->idBateau)
-                         ->where('datePeche', $lotEnAttente->datePeche)
-                         ->where('idLot', $lotEnAttente->idLot)
-                         ->first();
-            } else {
-                $lot = Lot::where('idCriee', $criee)
-                ->where('codeEtat', 'En vente')
-                ->first();
+                    ->where('datePeche', $lotEnAttente->datePeche)
+                    ->where('idLot', $lotEnAttente->idLot)
+                    ->first();
                 if ($lot) {
                     $lot->datePeche = Carbon::parse($lot->datePeche);
                 }
+            } else {
+                // Si aucun lot "En attente" n'existe, récupérer le premier lot "En vente"
+                $lot = Lot::where('idCriee', $criee)
+                    ->where('codeEtat', 'En vente')
+                    ->first();
+                if ($lot) {
+                    $lot->datePeche = Carbon::parse($lot->datePeche);
+                }
+                if (!$lot) {
+                    // Si aucun lot "En vente" n'existe, retourner un message d'erreur
+                    return back()->with('error', 'Aucun lot disponible pour cette criée.');
+                }
             }
-            
-            $prixMaxParLot = DB::table('lot')
-                ->select('idLot', DB::raw('MAX(prixDepart) as prixMax'))
-                ->groupBy('idLot')
-                ->get()
-                ->keyBy('idLot') // Utilise 'idLot' comme clé
-                ->map(function ($item) {
-                    return $item->prixMax; // Retourne uniquement 'prixMax' comme valeur
-                })
-                ->toArray(); // Convertit en tableau associatif
-        
-            return view('commissaire.lotCommissaire', compact('prochaineCriee', 'lot', 'prixMaxParLot'));
+
+            // Récupérer les enchères max pour le lot en vente
+            $dernierPrix = Poster::where('idBateau', $lot->idBateau)
+                ->where('datePeche', $lot->datePeche)
+                ->where('idLot', $lot->idLot)
+                ->orderBy('tempsEnregistrement', 'desc')
+                ->value('prixEnchere');
+
+            // Si aucun prix n'est trouvé, utilisez le prix de départ
+            $lot->prixActuel = $dernierPrix ?? $lot->prixDepart;
+
+            // Retourner la vue avec les données
+            return view('commissaire.lotCommissaire', compact('prochaineCriee', 'lot'));
         } catch (\Exception $e) {
             // Journaliser l'erreur pour le débogage
             Log::error('Erreur dans la méthode index: ' . $e->getMessage());
             Log::error('Trace: ' . $e->getTraceAsString());
-            
+
             // Retourner une erreur à l'utilisateur
             return back()->with('error', 'Une erreur est survenue: ' . $e->getMessage());
         }
@@ -77,8 +87,7 @@ class lotCommissaireController extends Controller
         $validated = $req->validate([
             'idBateau' => 'required|exists:lot,idBateau',
             'datePeche' => 'required|exists:lot,datePeche',
-            'idLot' => 'required|exists:lot,idLot',
-            'idAcheteur' => 'required|exists:acheteur,idAcheteur',
+            'idLot' => 'required|exists:lot,idLot'
         ]);
 
         // Récupérer le dernier prix enchéri ou le prix de départ
