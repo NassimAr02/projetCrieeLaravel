@@ -3,12 +3,17 @@
 namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
+use App\Models\Panier;
 use Illuminate\Http\Request;
 
 class factureController extends Controller
 {
     public function index()
     {
-        return view('acheteur.facture');
+        $factures = Panier::where('idAcheteur', auth()->id())
+            ->where('estFacture', true)
+            ->orderBy('dateFacture', 'desc')
+            ->get();
+        return view('acheteur.facture', compact('factures'));
     }
 }
