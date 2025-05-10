@@ -68,3 +68,4 @@ class LotAcheteurController extends Controller
 }
         
 
+}

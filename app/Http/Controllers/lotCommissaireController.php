@@ -153,7 +153,7 @@ class lotCommissaireController extends Controller
                           ->update(['codeEtat' => 'Terminee']);
                           if ($dernierSaisie) {
                             $lePanier = Panier::where('idAcheteur', $dernierSaisie->idAcheteur)
-                                ->orderBy('idPanier', 'desc')
+                                ->where('datePanier', $auj8)
                                 ->first();
 
                             if ($lePanier) {
