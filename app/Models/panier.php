@@ -11,7 +11,7 @@ class Panier extends Model
     protected $table ='panier';
     protected $primaryKey='idPanier';
     public $timestamps = false;
-    protected $fillable=['idAcheteur','total'];
+    protected $fillable=['idAcheteur','estFacture','dateFacture','total'];
 
     public function lots()
     {

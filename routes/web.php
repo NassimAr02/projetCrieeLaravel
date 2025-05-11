@@ -19,9 +19,9 @@ use App\Http\Controllers\Acheteur\AccueilAcheteurController;
 use App\Http\Controllers\Acheteur\LotAcheteurController;
 use App\Http\Controllers\lotCommissaire;
 use App\Http\Controllers\Acheteur\EncherirController;
-use App\Http\Controllers\factureController;
+use App\Http\Controllers\Acheteur\factureController;
 use App\Http\Controllers\lotCommissaireController;
-use App\Http\Controllers\panierController;
+use App\Http\Controllers\Acheteur\panierController;
 
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
@@ -62,7 +62,8 @@ Route::get('/lots', [LotAcheteurController::class, 'index'])->name('acheteur.lot
 Route::post('/encherir', [EncherirController::class, 'store'])->name('encherir.store');
 Route::get('/facture',[factureController::class, 'index'])->name('acheteur.factures');
 Route::get('/panier',[panierController::class, 'index'])->name('acheteur.panier');
-
+Route::post('/panier',[panierController::class, 'reglerPanier'])->name('acheteur.reglerPanier');
+Route::get('/facture/{panier}', [FactureController::class, 'telechargerFacture'])->name('facture.telecharger');
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AccueilAdminController::class, 'index'])->name('admin.dashboard');

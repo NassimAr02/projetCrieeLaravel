@@ -10,7 +10,7 @@
         protected $table='presentation';
         protected $primaryKey ='idPresentation';
         public $timestamps =false;
-        protected $fillable = ['libelle','idBac','idQualite'];
+        protected $fillable = ['idBac','idQualite','idAcheteur','libelle'];
 
         public function lots()
         {
@@ -23,6 +23,10 @@
         public function qualite()
         {
             return $this ->belongsTo(Qualite::class, 'idQualite','idQualite');
+        }
+        public function acheteur()
+        {
+            return $this ->belongsTo(Acheteur::class, 'idAcheteur','idAcheteur');
         }
     }
 ?>

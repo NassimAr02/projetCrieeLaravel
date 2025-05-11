@@ -16,10 +16,11 @@ return new class extends Migration
             $table->unsignedBigInteger('idBac');
             $table->unsignedBigInteger('idQualite');
             $table->unsignedBigInteger('idAcheteur');
+            $table->string('libelle');
             $table->foreign('idAcheteur')->references('idAcheteur')->on('acheteur')->onDelete('cascade');
             $table->foreign('idBac')->references('idBac')->on('bac')->onDelete('cascade');
             $table->foreign('idQualite')->references('idQualite')->on('qualite')->onDelete('cascade');
-            $table->string('libelle');
+            
         });
     }
 
