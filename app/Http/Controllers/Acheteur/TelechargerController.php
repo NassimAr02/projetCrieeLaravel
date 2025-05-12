@@ -1,12 +1,12 @@
 <?php
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Acheteur;
 
 use Illuminate\Http\Request;
 use App\Models\Lot;
 use App\Models\Panier;
-use PDF;
-
-class FactureController extends Controller
+use Barryvdh\DomPDF\Facade\Pdf as PDF;
+use App\Http\Controllers\Controller;
+class TelechargerController extends Controller
 {
     public function telechargerFacture($panier)
     {
