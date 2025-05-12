@@ -35,46 +35,37 @@
                     </h3>
 
                     @foreach($factures as $fac)
-                        
+                    <div class="overflow-x-auto rounded-lg border border-gray-200">
+                        <table class="min-w-full divide-y divide-gray-200">
+                            <thead class="bg-gray-50">
+                                <tr>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro facture</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total</th>
+                                    <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Action</th>
+                                </tr>
+                            </thead>
+                            <tbody class="bg-white divide-y divide-gray-200">
+                                <tr>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $fac->idPanier }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $fac->dateFacture }}</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $fac->total }} €</td>
+                                    <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
+                                        <button class="download-pdf inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white"
+                                                style="background-color: #2563eb;"
+                                                data-facture-id="{{ $fac->idPanier }}">
+                                            Télécharger la facture
+                                        </button>
+                                    </td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                        <div class="overflow-x-auto rounded-lg border border-gray-200">
-                            <table class="min-w-full divide-y divide-gray-200">
-                                <thead class="bg-gray-50">
-                                    <tr>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Numéro facture</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Qualité</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Espèce</th>
-                                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
-                                    </tr>
-                                </thead>
-                                <tbody class="bg-white divide-y divide-gray-200">
-                                    <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $fac->idPanier ?? '—'  }}</td> {{-- idTaille --}}
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $fac->dateFacture ?? '—'  }}</td> {{-- idQualite --}}
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $fac->total ?? '—'  }}€</td> {{-- idEspece --}}
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">
-                                            <form action="{{ route('facture.telecharger', ['panier' => $fac ->idPanier]) }}" method="POST">
-                                                    @csrf
-                                                    <div class="flex space-x-2 mt-4">
-                        {{--                                 
-                                                        <input type="text" name="idPanier" id="idPanier" value = "{{ $panier->idPanier }}" hidden> --}}
-
-                                                            <button type="submit"
-                                                                class="inline-flex items-center px-4 py-2 rounded-md shadow-sm text-sm font-medium text-white"
-                                                                            style="background-color: #2563eb;"
-                                                                            onmouseover="this.style.backgroundColor='#1d4ed8'"
-                                                                            onmouseout="this.style.backgroundColor='#2563eb'">
-                                                                Télécharger la facture
-                                                            </button>
-                                                </form>
-                                            </div>   
-                                        </td>   
-                                    </tr>
-                                </tbody>
-                            </table>
-                           
+                        <!-- Conteneur caché pour la facture -->
+                        <div id="facture-{{ $fac->idPanier }}" style="display: none;">
+                            @include('acheteur.facture_pdf', ['panier' => $fac])
                         </div>
-                        
+                    </div>
                     @endforeach
                 </div>    
             </div>
@@ -82,5 +73,27 @@
     </div>
   
     </main>
-    
+            <script>
+            document.querySelectorAll('.download-pdf').forEach(button => {
+                button.addEventListener('click', function () {
+                    // Récupérer l'ID de la facture
+                    const factureId = this.getAttribute('data-facture-id');
+
+                    // Sélectionner le conteneur HTML correspondant
+                    const element = document.getElementById(`facture-${factureId}`);
+
+                    // Options pour html2pdf
+                    const options = {
+                        margin: 1,
+                        filename: `facture_panier_${factureId}.pdf`,
+                        image: { type: 'jpeg', quality: 0.98 },
+                        html2canvas: { scale: 2 },
+                        jsPDF: { unit: 'in', format: 'letter', orientation: 'portrait' }
+                    };
+
+                    // Générer le PDF
+                    html2pdf().set(options).from(element).save();
+                });
+            });
+        </script>
   </x-app-layout>

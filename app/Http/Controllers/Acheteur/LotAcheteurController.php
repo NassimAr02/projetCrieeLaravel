@@ -58,11 +58,18 @@ public function index() {
 
     // Récupérer ou créer un panier pour l'acheteur
     $idAcheteur = auth()->id();
-    $panierEnCours = Panier::firstOrCreate(
-        ['idAcheteur' => $idAcheteur, 'datePanier' => $auj8],
-        ['total' => 0]
-    );
 
+    $panierEnCours = Panier::where('idAcheteur', $idAcheteur)
+        ->whereDate('datePanier', $auj8) // Utilisation de whereDate pour comparer uniquement la date
+        ->first();
+
+    if (!$panierEnCours) {
+        $panierEnCours = Panier::create([
+            'idAcheteur' => $idAcheteur,
+            'datePanier' => $auj8,
+            'total' => 0,
+        ]);
+    }
     // Retourner la vue avec les données
     return view('acheteur.lot_acheteur', compact('prochaineCriee', 'criees', 'lot', 'idAcheteur'));
 }

@@ -15,7 +15,7 @@ class Panier extends Model
 
     public function lots()
     {
-        return $this->hasMany(Panier::class,'idPanier');
+        return $this->hasMany(Lot::class, 'idPanier', 'idPanier');
     }
     public function acheteur()
     {
