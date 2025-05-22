@@ -3,7 +3,7 @@
 
 <x-app-layout>
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <meta http-equiv="refresh" content="5">
+    {{-- <meta http-equiv="refresh" content="5"> --}}
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 leading-tight">
             {{ __('Dashboard') }}
@@ -39,6 +39,13 @@
                         </ul>
                     </div>
                 @endif
+                @if(session('success'))
+    <div class="alert alert-success">{{ session('success') }}</div>
+@endif
+@if(session('error'))
+    <div class="alert alert-danger">{{ session('error') }}</div>
+@endif
+
                 <!-- Section Prochaine Criée -->
                 <div class="p-6 border-b border-gray-200">
                     <h3 class="text-lg font-semibold text-gray-800 mb-4 flex items-center">
@@ -138,5 +145,11 @@
     </div>
   
     </main>
-    
+   @if(!session('success') && !session('error') && isset($lot) && $lot)
+    <script>
+        setTimeout(function() {
+            window.location.reload();
+        }, 5000);
+    </script>
+    @endif
   </x-app-layout>

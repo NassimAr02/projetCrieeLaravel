@@ -145,7 +145,8 @@ class lotCommissaireController extends Controller
                 ->orderBy('tempsEnregistrement', 'desc')
                 ->first();
            
-            
+            $updated2 = false;
+            $updated3 = false;
             // Mise à jour directe avec update()
             $updated = Lot::where('idBateau', $validated['idBateau'])
                           ->where('datePeche', $validated['datePeche'])
@@ -183,7 +184,7 @@ class lotCommissaireController extends Controller
                                           ->where('idLot', $validated['idLot'])
                                           ->update(['prixEnchereMax' => $prixPlancher]);
                         }
-            if ($updated && $updated2 && $updated3) {
+            if ($updated && ($updated2 || $updated3)) {
                 return back()->with('success', 'Enchère terminée.');
             } else {
                 return back()->with('error', 'Impossible de terminer l\'enchère.');
