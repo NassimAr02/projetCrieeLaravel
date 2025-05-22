@@ -64,7 +64,7 @@ Route::post('/encherir', [EncherirController::class, 'store'])->name('encherir.s
 Route::get('/facture',[FactureController::class, 'index'])->name('acheteur.factures');
 Route::get('/panier',[panierController::class, 'index'])->name('acheteur.panier');
 Route::post('/panier',[panierController::class, 'reglerPanier'])->name('acheteur.reglerPanier');
-Route::post('/facture/{panier}', [TelechargerController::class, 'telechargerFacture'])->name('facture.telecharger');
+Route::get('/facture/{panier}', [TelechargerController::class, 'telechargerFacture'])->name('facture.telecharger');
 // Routes admin
 Route::middleware(['staff.auth:admin'])->prefix('admin')->group(function () {
     Route::get('/dashboard', [AccueilAdminController::class, 'index'])->name('admin.dashboard');

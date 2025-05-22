@@ -53,8 +53,9 @@ class lotCommissaireController extends Controller
                     $lot->datePeche = Carbon::parse($lot->datePeche);
                 }
                 if (!$lot) {
-                    // Si aucun lot "En vente" n'existe, retourner un message d'erreur
-                    return back()->with('error', 'Aucun lot disponible pour cette criée.');
+                    // Ne pas faire de redirection ici !
+                    // Juste afficher la vue sans lot
+                    return view('commissaire.lotCommissaire', compact('prochaineCriee', 'lot'));
                 }
             }
 

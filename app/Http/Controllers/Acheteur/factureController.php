@@ -10,8 +10,7 @@ class factureController extends Controller
 {
     public function index()
     {
-        $factures = Panier::with('lots.taille', 'lots.qualite', 'lots.espece')
-            ->where('idAcheteur', auth()->id())
+        $factures = Panier::where('idAcheteur', auth()->id())
             ->where('estFacture', true)
             ->orderBy('dateFacture', 'desc')
             ->get();
