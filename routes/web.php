@@ -55,8 +55,6 @@ Route::post('/staff/logout', [loginController::class, 'logout'])
     
 // Routes acheteur
 
-// Route::get('/encheres', [EnchereAcheteurQueryController::class, 'index'])->name('encheres');
-// Route::get('/encheres', function () { return view('enchere_acheteur'); })->name('encheres'); //Route qui fonctionne
 Route::get('/encheres', [AccueilAcheteurController::class, 'index'])->name('acheteur.enchere_acheteur');
 Route::get('/lots', [LotAcheteurController::class, 'index'])->name('acheteur.lot_acheteur');
 // Route::post('/lots',[LotAcheteurController::class, 'store'])->name('acheteur.encherir.store');
