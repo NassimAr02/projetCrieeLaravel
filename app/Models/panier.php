@@ -21,4 +21,5 @@ class Panier extends Model
     {
         return $this->belongsTo(Acheteur::class,'idAcheteur','idAcheteur');
     }
+    
 }

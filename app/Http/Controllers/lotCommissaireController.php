@@ -159,11 +159,13 @@ class lotCommissaireController extends Controller
                                 ->first();
 
                             if ($lePanier) {
-                                $lePanier->update(['total' => $dernierSaisie->prixEnchere]);
+                                $nouveauTotal = $lePanier->total + $dernierSaisie->prixEnchere;
+                                $lePanier->update(['total' => $nouveauTotal]);
                             } else {
                                 // Si aucun panier n'existe, vous pouvez en créer un ou gérer l'erreur
                                 $lePanier = Panier::create([
                                     'idAcheteur' => $dernierSaisie->idAcheteur,
+                                    'datePanier' => $auj8,
                                     'total' => $dernierSaisie->prixEnchere,
                                 ]);
                             }

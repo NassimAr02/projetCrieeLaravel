@@ -39,7 +39,7 @@
                         Lot en cours
                     </h3>
 
-                    @if($prochaineCriee)
+                    @if($lot)
                     <input type="text" name="idLot" id="idLot" value = "{{ $lot->idLot }}" hidden>
                     <input type="date" name="datePeche" id="datePeche" value = "{{ $lot->datePeche }}" hidden>
                     <input type="text" name="idBateau" id="idBateau" value = "{{ $lot->idBateau }}" hidden>
@@ -98,9 +98,10 @@
                         </div>
                     @else
                         <div class="text-center py-8 bg-gray-50 rounded-lg border border-gray-200">
-                            
-                            <h4 class="mt-2 text-sm font-medium text-gray-700">Aucune criée programmée</h4>
-                            <p class="mt-1 text-sm text-gray-500">Commencez par créer une nouvelle criée</p>
+                            <h4 class="mt-2 text-sm font-medium text-gray-700">
+                                {{ $message ?? 'Aucun lot disponible pour cette criée.' }}
+                            </h4>
+                            <p class="mt-1 text-sm text-gray-500">Attendez le début de la prochaine Criée</p>
                         </div>
                     @endif
                 </div>    

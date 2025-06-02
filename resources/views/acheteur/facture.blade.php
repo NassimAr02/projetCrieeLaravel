@@ -56,7 +56,7 @@
                                                         style="background-color: #2563eb;"
                                                         onmouseover="this.style.backgroundColor='#1d4ed8'" 
                                                         onmouseout="this.style.backgroundColor='#2563eb'" id="boutonRedir">
-                                                        Entrer dans l'enchère
+                                                        Consulter la facture
                                         </a>
                                     </td>
                                 </tr>

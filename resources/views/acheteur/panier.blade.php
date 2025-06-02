@@ -77,6 +77,8 @@
                                 <option value="nettoye">Nettoyé</option>
                                 <option value="vide">Vidé</option>
                             </select>
+                    @endforeach
+                    
 
                             <div class="flex space-x-2 mt-4">
                                 
@@ -95,7 +97,6 @@
                                     </button>
                                 </form>
                             </div>
-                    @endforeach
                 </div>    
             </div>
         </div>
