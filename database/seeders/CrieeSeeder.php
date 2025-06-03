@@ -2,17 +2,24 @@
 
 namespace Database\Seeders;
 
-use App\Models\Criee;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class CrieeSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        Criee::factory()->count(5)->create();
+        DB::table('criee')->insert([
+            [
+                'dateCriee' => '2025-06-03',
+                'heureDebut' => '15:40:00',
+                'heureFin' => '16:22:00',
+            ],
+            [
+                'dateCriee' => '2025-06-04',
+                'heureDebut' => '07:00:00',
+                'heureFin' => '13:00:00',
+            ],
+        ]);
     }
 }

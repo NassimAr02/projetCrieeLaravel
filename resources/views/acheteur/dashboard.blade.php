@@ -107,14 +107,18 @@
                                 </thead>
                                 <tbody class="bg-white divide-y divide-gray-200">
                                     @foreach($criees as $criee)
-                                    <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $criee->idCriee }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($criee->dateCriee)->format('d/m/Y') }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $criee->heureDebut }}</td>
-                                        <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ $criee->heureFin }}</td>
-                                        
-                                    </tr>
-                                    @endforeach
+                                        <tr class="hover:bg-gray-50 transition duration-150 ease-in-out">
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm font-medium text-gray-900">{{ $criee->idCriee }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500">{{ \Carbon\Carbon::parse($criee->dateCriee)->format('d/m/Y') }}</td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 heureDebutListe" name="heureDebut">
+                                                {{ \Carbon\Carbon::parse($criee->heureDebut)->format('H:i:s') }}
+                                            </td>
+                                            <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 heureFinListe" name="heureFin">
+                                                {{ \Carbon\Carbon::parse($criee->heureFin)->format('H:i:s') }}
+                                            </td>
+                                     
+                                        </tr>
+                                        @endforeach
                                 </tbody>
                             </table>
                         </div>
@@ -132,19 +136,42 @@
     </main>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const dateDebut = document.getElementById('dateDebut').dataset.date;
-            const heureDebut = document.getElementById('heureDebut').innerText;
-            const heureFin = document.getElementById('heureFin').innerText;
+            const dateDebutElem = document.getElementById('dateDebut');
+            const heureDebutElem = document.getElementById('heureDebut');
+            const heureFinElem = document.getElementById('heureFin');
             const button = document.getElementById('boutonRedir');
-    
-            const dateDebutTime = new Date(`${dateDebut}T${heureDebut}`);
-            const dateFinTime = new Date(`${dateDebut}T${heureFin}`);
-            const maintenant = new Date();
-    
-            if (maintenant < dateDebutTime || maintenant > dateFinTime) {
-                button.setAttribute('disabled', 'disabled');
-            } else {
-                button.removeAttribute('disabled');
+
+            if (dateDebutElem && heureDebutElem && heureFinElem && button) {
+                // Utiliser l'attribut data-date (format YYYY-MM-DD)
+                const dateDebut = dateDebutElem.dataset.date;
+                const heureDebut = heureDebutElem.innerText.trim();
+                const heureFin = heureFinElem.innerText.trim();
+
+
+                const dateDebutTime = new Date(`${dateDebut}T${heureDebut}`);
+                const dateFinTime = new Date(`${dateDebut}T${heureFin}`);
+                const maintenant = new Date();
+
+          
+
+                if (isNaN(dateDebutTime.getTime()) || isNaN(dateFinTime.getTime())) {
+                    alert('Erreur de parsing de la date ou de l\'heure. Vérifiez le format.');
+                    return;
+                }
+
+                // Calcul de la date d'ouverture (10 minutes avant le début)
+                const ouvertureTime = new Date(dateDebutTime.getTime() - 10 * 60 * 1000);
+                console.log('ouvertureTime:', ouvertureTime);
+
+                if (maintenant < ouvertureTime || maintenant > dateFinTime) {
+                    button.setAttribute('disabled', 'disabled');
+                    button.classList.add('pointer-events-none', 'opacity-50');
+                    button.href = "javascript:void(0);";
+                } else {
+                    button.removeAttribute('disabled');
+                    button.classList.remove('pointer-events-none', 'opacity-50');
+                    // Le href est déjà correct dans le HTML
+                }
             }
         });
     </script>

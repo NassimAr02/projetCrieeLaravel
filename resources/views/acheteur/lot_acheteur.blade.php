@@ -39,7 +39,8 @@
                         Lot en cours
                     </h3>
 
-                    @if($lot)
+                    @if($prochaineCriee && $lot)
+                    {{-- Si une criée est en cours et qu'il y a un lot --}}
                     <input type="text" name="idLot" id="idLot" value = "{{ $lot->idLot }}" hidden>
                     <input type="date" name="datePeche" id="datePeche" value = "{{ $lot->datePeche }}" hidden>
                     <input type="text" name="idBateau" id="idBateau" value = "{{ $lot->idBateau }}" hidden>

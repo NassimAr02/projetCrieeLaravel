@@ -2,17 +2,22 @@
 
 namespace Database\Seeders;
 
-use App\Models\PecheCotiere;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PecheCotiereSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        PecheCotiere::factory()->count(10)->create();
+        DB::table('peche_cotieres')->insert([
+            [
+                'idBateau' => 2,
+                'datePeche' => '2025-06-02',
+            ],
+            [
+                'idBateau' => 3,
+                'datePeche' => '2025-06-02',
+            ],
+        ]);
     }
 }

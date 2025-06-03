@@ -104,19 +104,36 @@
     </div>
     <script>
         document.addEventListener('DOMContentLoaded', function () {
-            const dateDebut = document.getElementById('dateDebut').dataset.date;
-            const heureDebut = document.getElementById('heureDebut').innerText;
-            const heureFin = document.getElementById('heureFin').innerText;
+            const dateDebutElem = document.getElementById('dateDebut');
+            const heureDebutElem = document.getElementById('heureDebut');
+            const heureFinElem = document.getElementById('heureFin');
             const button = document.getElementById('boutonRedir');
-    
-            const dateDebutTime = new Date(`${dateDebut}T${heureDebut}`);
-            const dateFinTime = new Date(`${dateDebut}T${heureFin}`);
-            const maintenant = new Date();
-    
-            if (maintenant < dateDebutTime || maintenant > dateFinTime) {
-                button.setAttribute('disabled', 'disabled');
-            } else {
-                button.removeAttribute('disabled');
+
+            if (dateDebutElem && heureDebutElem && heureFinElem && button) {
+                // Pour la date, il faut la récupérer au format YYYY-MM-DD
+                // Ici, on suppose que la date affichée est au format d/m/Y, donc il faut la convertir
+                const dateFr = dateDebutElem.innerText.trim();
+                const [jour, mois, annee] = dateFr.split('/');
+                const dateDebut = `${annee}-${mois.padStart(2, '0')}-${jour.padStart(2, '0')}`;
+                const heureDebut = heureDebutElem.innerText.trim();
+                const heureFin = heureFinElem.innerText.trim();
+
+                const dateDebutTime = new Date(`${dateDebut}T${heureDebut}`);
+                const dateFinTime = new Date(`${dateDebut}T${heureFin}`);
+                const maintenant = new Date();
+
+                // Calcul de la date d'ouverture (10 minutes avant le début)
+                const ouvertureTime = new Date(dateDebutTime.getTime() - 10 * 60 * 1000);
+
+                if (maintenant < ouvertureTime || maintenant > dateFinTime) {
+                    button.setAttribute('disabled', 'disabled');
+                    button.classList.add('pointer-events-none', 'opacity-50');
+                    button.href = "javascript:void(0);";
+                } else {
+                    button.removeAttribute('disabled');
+                    button.classList.remove('pointer-events-none', 'opacity-50');
+                    // Le href est déjà correct dans le HTML
+                }
             }
         });
     </script>

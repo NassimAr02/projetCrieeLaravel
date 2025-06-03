@@ -10,51 +10,52 @@ use App\Models\Presentation;
 
 class panierController extends Controller
 {
+
     public function index()
-    {   
+    {
         $id = auth()->id();
         $panier = Panier::where('idAcheteur', $id)
             ->where('estFacture', false)
             ->where('datePanier', now()->format('Y-m-d'))
             ->first();
-        $lotRemportes = Lot::where('idAcheteur', $id)
-            ->where('idPanier', $panier->idPanier ?? null)
-            ->get();
-        return view('acheteur.panier', compact('lotRemportes','id'));
-    }
 
+        $prochainLot = null;
+        if ($panier) {
+            $prochainLot = Lot::where('idAcheteur', $id)
+                ->where('idPanier', $panier->idPanier)
+                ->whereNull('idPresentation')
+                ->first();
+        }
+
+        return view('acheteur.panier', compact('prochainLot', 'id'));
+    }
 
     public function reglerPanier(Request $req)
     {
-         // Validation des données
         $req->validate([
-            'libele' => 'required|string', // Vérifie que le champ libele est présent et valide
+            'libele' => 'required|string',
         ]);
 
-        // Récupérer le panier de l'acheteur
         $panier = Panier::where('idAcheteur', auth()->id())
             ->where('estFacture', false)
             ->where('datePanier', now()->format('Y-m-d'))
             ->first();
 
-        if ($panier) {
-            $panier->estFacture = true;
-            $panier->dateFacture = now();
-            $panier->save();
+        if (!$panier) {
+            return redirect()->route('acheteur.factures')->with('error', 'Aucun panier trouvé.');
         }
 
-        // Récupérer le lot correspondant
-        $lot = Lot::where('idBateau', $req->idBateau)
+        $lot = Lot::where('idAcheteur', auth()->id())
+            ->where('idPanier', $panier->idPanier)
+            ->where('idBateau', $req->idBateau)
             ->where('datePeche', $req->datePeche)
             ->where('idLot', $req->idLot)
-            ->where('idAcheteur', auth()->id())
             ->first();
 
         if (!$lot) {
-            return back()->with('error', 'Le lot spécifié est introuvable.');
+            return back()->with('error', 'Lot non trouvé.');
         }
 
-        // Créer une présentation
         $presentation = Presentation::create([
             'idBac' => $lot->idBac,
             'idQualite' => $lot->idQualite,
@@ -62,11 +63,30 @@ class panierController extends Controller
             'libelle' => $req->libele,
         ]);
 
-        // Mettre à jour le lot avec l'ID de la présentation
-        Lot::where('idAcheteur', auth()->id())
-            ->where('idPanier', $panier->idPanier ?? null)
-            ->update(['idPresentation' => $presentation->idPresentation]);
+        // Mise à jour via requête Eloquent classique pour éviter le bug avec clé composite
+        Lot::where('idAcheteur', $lot->idAcheteur)
+            ->where('idPanier', $lot->idPanier)
+            ->where('idBateau', $lot->idBateau)
+            ->where('datePeche', $lot->datePeche)
+            ->where('idLot', $lot->idLot)
+            ->update([
+                'idPresentation' => $presentation->idPresentation
+            ]);
 
-        return redirect()->route('acheteur.factures')->with('success', 'Le panier a été réglé avec succès.');
+        // Vérifier s'il reste des lots sans présentation dans ce panier
+        $autreLot = Lot::where('idAcheteur', auth()->id())
+            ->where('idPanier', $panier->idPanier)
+            ->whereNull('idPresentation')
+            ->first();
+
+        if ($autreLot) {
+            return redirect()->route('acheteur.panier')->with('success', 'Présentation créée. Veuillez compléter la suivante.');
+        } else {
+            $panier->estFacture = true;
+            $panier->dateFacture = now();
+            $panier->save();
+            return redirect()->route('acheteur.factures')->with('success', 'Le panier a été réglé avec succès.');
+        }
     }
+
 }

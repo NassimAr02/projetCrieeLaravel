@@ -2,17 +2,26 @@
 
 namespace Database\Seeders;
 
-use App\Models\Bateau;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class BateauSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        Bateau::factory()->count(5)->create(); 
+        DB::table('bateau')->insert([
+            [
+                'idBateau' => 1,
+                'nomBateau' => 'L’Étoile du Matin',
+            ],
+            [
+                'idBateau' => 2,
+                'nomBateau' => 'Le Grand Large',
+            ],
+            [
+                'idBateau' => 3,
+                'nomBateau' => 'La Belle Mer',
+            ],
+        ]);
     }
 }

@@ -9,6 +9,7 @@
 
         protected $table='presentation';
         protected $primaryKey ='idPresentation';
+        public $incrementing = true;
         public $timestamps =false;
         protected $fillable = ['idBac','idQualite','idAcheteur','libelle'];
 

@@ -2,17 +2,21 @@
 
 namespace Database\Seeders;
 
-use App\Models\Panier;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class PanierSeeder extends Seeder
 {
-    /**
-     * Run the database seeds.
-     */
-    public function run(): void
+    public function run()
     {
-        Panier::factory()->count(10)->create();
+        DB::table('panier')->insert([
+            [
+                'idAcheteur' => 1000,
+                'datePanier' => '2025-06-03',
+                'estFacture' => false,
+                'dateFacture' => null,
+                'total' => 1200.00
+            ]
+        ]);
     }
 }
