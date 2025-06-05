@@ -23,11 +23,12 @@ use App\Http\Controllers\Acheteur\FactureController;
 use App\Http\Controllers\lotCommissaireController;
 use App\Http\Controllers\Acheteur\panierController;
 use App\Http\Controllers\Acheteur\TelechargerController;
-
+use App\Http\Controllers\loginEvolution;
+use App\Http\Controllers\registerEvolution;
 // Routes publiques
 Route::get('/', function () { return view('welcome'); });
 Route::get('/accueil', function() { return view('welcome'); })->name('accueil');
-Route::get('/acheteur', [AcheteurQueryController::class, 'index'])->name('acheteur_accueil');
+
 
 Route::get('/mentionLegale', function () { return view('mentionLegale'); })->name('mentionLegale');
 Route::get('/cgv', function () { return view('cgv'); })->name('cgv');
@@ -43,6 +44,8 @@ Route::middleware('auth')->group(function () {
 // Routes de connexion staff
 Route::middleware('guest')->group(function () {
     Route::get('/staff/login', function () { return view('auth.login-staff'); })->name('staff.login');
+    Route::get('/criee_evolution/register', [registerEvolution::class, 'index'])->name('criee_evolution.register');
+    Route::post('/criee_evolution/register', [registerEvolution::class, 'store'])->name('criee_evolution.register.submit');
     Route::post('/staff/login', [loginController::class, 'store'])->name('staff.login.submit');
 });
 
@@ -95,5 +98,15 @@ Route::middleware(['staff.auth:commissaire'])->prefix('commissaire')->group(func
     //      ->name('commissaire.vente.index');
     // Ajoutez d'autres routes commissaire ici
 });
+// Formulaire de login (GET)
+Route::middleware('guest')->get('/criee_evolution/login', function () {
+    return view('loginEvolution');
+})->name('criee_evolution.login');
 
+// Soumission du login (POST) + dashboard (GET) protégés par middleware
+Route::prefix('criee_evolution')->group(function () {
+    Route::post('/login', [loginEvolution::class, 'login'])->name('criee_evolution.login.submit');
+    Route::middleware('verifguard:criee_evolution')->get('/dashboard', [loginEvolution::class, 'index'])->name('criee_evolution.dashboard');
+    Route::post('/logout', [loginEvolution::class, 'logout'])->name('criee_evolution.logout');
+});
 require __DIR__.'/auth.php';

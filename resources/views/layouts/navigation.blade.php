@@ -9,13 +9,6 @@
                         <x-application-logo class="block h-9 w-auto fill-current text-gray-800" />
                     </a>
                 </div>
-
-                <!-- Navigation Links Communs -->
-                {{-- <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                    <x-nav-link :href="route('acheteur.enchere_acheteur')" :active="request()->routeIs('acheteur.enchere_acheteur')">
-                        {{ __('Enchères') }}
-                    </x-nav-link>
-                </div> --}}
             </div>
 
             <!-- Partie Droite de la Navbar -->
@@ -33,14 +26,13 @@
                                 </div>
                             </button>
                         </x-slot>
-
                         <x-slot name="content">
                             <x-dropdown-link :href="route('acheteur.factures')">
                                 {{ __('Facture') }}
-                            </x-dropdown->
+                            </x-dropdown-link>
                             <x-dropdown-link :href="route('acheteur.panier')">
                                 {{ __('Panier') }}
-                            </x-dropdown->
+                            </x-dropdown-link>
                             <x-dropdown-link :href="route('profile.edit')">
                                 {{ __('Profil') }}
                             </x-dropdown-link>
@@ -54,17 +46,38 @@
                             </form>
                         </x-slot>
                     </x-dropdown>
-
+                @elseif(auth('criee_evolution')->check())
+                    <!-- Utilisateur Criee Evolution Connecté -->
+                    <x-dropdown align="right" width="48">
+                        <x-slot name="trigger">
+                            <button class="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150">
+                                <div>{{ auth('criee_evolution')->user()->name }}</div>
+                                <div class="ms-1">
+                                    <svg class="fill-current h-4 w-4" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 20 20">
+                                        <path fill-rule="evenodd" d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z" clip-rule="evenodd" />
+                                    </svg>
+                                </div>
+                            </button>
+                        </x-slot>
+                        <x-slot name="content">
+                            {{-- Ajoute ici d'autres liens spécifiques si besoin --}}
+                            <form method="POST" action="{{ route('criee_evolution.logout') }}">
+                                @csrf
+                                <x-dropdown-link :href="route('criee_evolution.logout')"
+                                        onclick="event.preventDefault(); this.closest('form').submit();">
+                                    {{ __('Déconnexion') }}
+                                </x-dropdown-link>
+                            </form>
+                        </x-slot>
+                    </x-dropdown>
                 @elseif(session('user_type'))
                     <!-- Staff Connecté (Admin/Commissaire) -->
-                    
                     <form method="POST" action="{{ route('staff.logout') }}">
                         @csrf
                         <button type="submit" class="text-sm text-gray-500 hover:text-gray-700">
                             Déconnexion Staff
                         </button>
                     </form>
-
                 @else
                     <!-- Visiteur Non Connecté -->
                     <div class="flex space-x-4">
@@ -73,6 +86,9 @@
                         </x-nav-link>
                         <x-nav-link :href="route('staff.login')" :active="request()->routeIs('staff.login')">
                             {{ __('Connexion Staff') }}
+                        </x-nav-link>
+                        <x-nav-link :href="route('criee_evolution.login')" :active="request()->routeIs('criee_evolution.login')">
+                            {{ __('Connexion Criee Evolution') }}
                         </x-nav-link>
                     </div>
                 @endif
@@ -112,6 +128,36 @@
                     <form method="POST" action="{{ route('logout') }}">
                         @csrf
                         <x-responsive-nav-link :href="route('logout')"
+                                onclick="event.preventDefault();
+                                            this.closest('form').submit();">
+                            {{ __('Déconnexion') }}
+                        </x-responsive-nav-link>
+                    </form>
+                </div>
+            </div>
+        @elseif(auth('criee_evolution')->check())
+            <!-- Criee Evolution Connecté -->
+            <div class="pt-4 pb-1 border-t border-gray-200">
+                <div class="px-4">
+                    <div class="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
+                    <x-nav-link :href="route('admin.bateau')" :active="request()->routeIs('admin.bateau')">
+                        {{ __('Ajouter un bateau') }}
+                    </x-nav-link>
+                    <x-nav-link :href="route('admin.ajoutPeches')" :active="request()->routeIs('admin.ajoutPeches')">
+                        {{ __('Ajouter une pêche') }}
+                    </x-nav-link>
+                </div>
+                    <div class="font-medium text-base text-gray-800">
+                        {{ auth('criee_evolution')->user()->name }}
+                    </div>
+                    <div class="font-medium text-sm text-gray-500">
+                        {{ auth('criee_evolution')->user()->email }}
+                    </div>
+                </div>
+                <div class="mt-3 space-y-1">
+                    <form method="POST" action="{{ route('criee_evolution.logout') }}">
+                        @csrf
+                        <x-responsive-nav-link :href="route('criee_evolution.logout')"
                                 onclick="event.preventDefault();
                                             this.closest('form').submit();">
                             {{ __('Déconnexion') }}

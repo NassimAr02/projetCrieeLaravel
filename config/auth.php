@@ -44,6 +44,10 @@ return [
         'driver' => 'session',
         'provider' => 'criee_users',
         ],
+        'criee_evolution' => [
+            'driver' => 'session',
+            'provider' => 'userEvolution', // Utilise le modèle userEvolution
+        ],
        
     ],
 
@@ -72,6 +76,10 @@ return [
         'criee_users' => [
             'driver' => 'eloquent',
             'model' => App\Models\CrieeUser::class,
+        ],
+        'userEvolution' => [
+            'driver' => 'eloquent',
+            'model' => App\Models\userEvolution::class, // Utilise le modèle CrieeEvolution
         ],
         // 'users' => [
         //     'driver' => 'database',
