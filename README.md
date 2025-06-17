@@ -1,3 +1,18 @@
+# Projet Criée - Vente aux enchères de poissons
+Le but de ce projet de groupe est de pouvoir faire de la gestion de projet en méthode agile (nous utiliserons Trello) et déployer une application web. <br>
+
+# Le but ? 
+L'application doit permettre de pouvoir se connceter en tant qu'acheteur, administrateur ou bien commissaire de vente. Chacun ayant ses rôles et droits spécifiques. 
+
+## L'administrateur
+Doit permettre de pouvoir créer une criée comportant plus lots dont l'acheteur pourra enchérir par la suite. De plus, il peut insérer de nouvelles données comme recenser des pêches qui ont eu lieu, les bateaux ou bien même le catalogue d'espèces de poissons. 
+
+## Le commissaire de vente
+Tout comme l'administrateur, le commissaire de vente détient un tableau de bord lui permettant de visionner les criées en cours et ceux à venir. La particularité est qu'il puisse démarrer la vente, mettre à jour le statut du lot et de pouvoir gérer de façon extensive les enchères.
+
+## L'acheteur 
+Depuis son interface, l'acheteur peut accéder à une criée, et enchérir sur un lot. Si gagnant du lot et que le commissaire de vente clôture l'enchère, l'acheteur pourra donc l'ajouter dans son panier et valider la facture (qui pourra être généré en PDF par la suite). 
+
 # Configuration de la machine virtuelle
 Importer la machine sur VirtualBox <br>
 
